@@ -1,5 +1,5 @@
 # DEsingle
-An R package for differential expression analysis of single-cell RNA-seq data
+An R package for differential expression analysis of single-cell RNA-seq data.
 
 # Install DEsingle
 To install DEsingle R package, just execute the following code in R console:
@@ -30,10 +30,12 @@ Using the following code in R to get access to the help documentation for DEsing
 ```
 # Documentation for DEsingle
 ?DEsingle
-
+```
+```
 # Documentation for DEtype
 ?DEtype
-
+```
+```
 # Documentation for counts and group in TestData
 ?counts
 ?group
