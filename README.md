@@ -25,3 +25,20 @@ results <- DEsingle(counts = counts, group = group)
 # Dividing the differentially expressed genes into 3 categories
 results <- DEtype(results = results, threshold = 0.05)
 ```
+# Help
+Using the following code in R to get access to the help documentation for DEsingle:
+```
+# Documentation for DEsingle
+?DEsingle
+
+# Documentation for DEtype
+?DEtype
+
+# Documentation for counts and group in TestData
+?counts
+?group
+```
+# Authors
+Zhun Miao, Xuegong Zhang <<zhangxg@tsinghua.edu.cn>>
+
+MOE Key Laboratory of Bioinformatics; Bioinformatics Division and Center for Synthetic & Systems Biology, TNLIST; Department of Automation, Tsinghua University, Beijing 100084, China
