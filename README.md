@@ -7,6 +7,8 @@ To install DEsingle R package, just execute the following code in R console:
 ```
 # Install devtools if needed
 if(!require(devtools)) install.packages("devtools")
+```
+```
 # Install DEsingle
 install_github("miaozhun/DEsingle")
 ```
