@@ -1,0 +1,19 @@
+Package: DEsingle
+Type: Package
+Title: Detecting Differentially Expressed Genes from single-cell RNA-seq data
+Version: 0.1.0
+Date: 2017-06-06
+Author: Zhun Miao, Xuegong Zhang <zhangxg@tsinghua.edu.cn>
+Maintainer: Zhun Miao <miaoz13@mails.tsinghua.edu.cn>
+Description: DEsingle is an R package for differential expression analysis of single-cell RNA-seq data.
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
+Imports:
+  pscl (>= 1.4.9),
+  gamlss (>= 4.4-0),
+  VGAM (>= 1.0-2),
+  MASS (>= 7.3-45),
+  bbmle (>= 1.0.18),
+  maxLik (>= 1.3-4)
+RoxygenNote: 6.0.1
