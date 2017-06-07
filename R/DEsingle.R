@@ -575,6 +575,7 @@ DEsingle <- function(counts, group){
   results[,"FDR_LR3"] <- p.adjust(results[,"pvalue_LR3"], method="fdr")
   results[,"pvalue.adj.FDR"] <- p.adjust(results[,"pvalue"], method="fdr")
   results <- results[order(results[,"chi2LR1"], decreasing = T),]
+  remove(lastFuncGrad, lastFuncParam, envir=.GlobalEnv)
   cat(paste0("\n\n ",sum(!is.na(results[,"Remark"])), " gene failed.\n\n"))
   results
 
