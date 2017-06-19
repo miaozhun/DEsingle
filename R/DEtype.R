@@ -56,19 +56,40 @@
 
 
 DEtype <- function(results, threshold){
-  results <- cbind(results, NA)
-  colnames(results)[ncol(results)] <- "Type"
+  results <- as.data.frame(results)
+  results <- cbind(results, NA, NA)
+  colnames(results)[c(ncol(results)-1, ncol(results))] <- c("Type", "State")
   for(i in 1:nrow(results)){
     if(results[i,"pvalue.adj.FDR"] < threshold)
     {
-      if(results[i,"FDR_LR2"] < threshold & results[i,"FDR_LR3"] < threshold)
-        results[i,"Type"] <- 2
-      else if(results[i,"FDR_LR2"] < threshold)
-        results[i,"Type"] <- 0
-      else if(results[i,"FDR_LR3"] < threshold)
-        results[i,"Type"] <- 1
-      else
-        results[i,"Type"] <- 2
+      if(results[i,"FDR_LR2"] < threshold & results[i,"FDR_LR3"] < threshold){
+        results[i,"Type"] <- "DSA"
+        if(results[i,"mu_1"] * (1 - results[i,"theta_1"]) >= results[i,"mu_2"] * (1 - results[i,"theta_2"]))
+          results[i,"State"] <- "up"
+        else
+          results[i,"State"] <- "down"
+      }
+      else if(results[i,"FDR_LR2"] < threshold){
+        results[i,"Type"] <- "DS"
+        if(results[i,"theta_1"] <= results[i,"theta_2"])
+          results[i,"State"] <- "up"
+        else
+          results[i,"State"] <- "down"
+      }
+      else if(results[i,"FDR_LR3"] < threshold){
+        results[i,"Type"] <- "DA"
+        if(results[i,"mu_1"] >= results[i,"mu_2"])
+          results[i,"State"] <- "up"
+        else
+          results[i,"State"] <- "down"
+      }
+      else{
+        results[i,"Type"] <- "DSA"
+        if(results[i,"mu_1"] * (1 - results[i,"theta_1"]) >= results[i,"mu_2"] * (1 - results[i,"theta_2"]))
+          results[i,"State"] <- "up"
+        else
+          results[i,"State"] <- "down"
+      }
     }
     else
       next;
