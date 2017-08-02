@@ -63,28 +63,28 @@ DEtype <- function(results, threshold){
     if(results[i,"pvalue.adj.FDR"] < threshold)
     {
       if(results[i,"FDR_LR2"] < threshold & results[i,"FDR_LR3"] < threshold){
-        results[i,"Type"] <- "DSA"
+        results[i,"Type"] <- "DEg"
         if(results[i,"mu_1"] * (1 - results[i,"theta_1"]) >= results[i,"mu_2"] * (1 - results[i,"theta_2"]))
           results[i,"State"] <- "up"
         else
           results[i,"State"] <- "down"
       }
       else if(results[i,"FDR_LR2"] < threshold){
-        results[i,"Type"] <- "DS"
+        results[i,"Type"] <- "DEs"
         if(results[i,"theta_1"] <= results[i,"theta_2"])
           results[i,"State"] <- "up"
         else
           results[i,"State"] <- "down"
       }
       else if(results[i,"FDR_LR3"] < threshold){
-        results[i,"Type"] <- "DA"
+        results[i,"Type"] <- "DEa"
         if(results[i,"mu_1"] >= results[i,"mu_2"])
           results[i,"State"] <- "up"
         else
           results[i,"State"] <- "down"
       }
       else{
-        results[i,"Type"] <- "DSA"
+        results[i,"Type"] <- "DEg"
         if(results[i,"mu_1"] * (1 - results[i,"theta_1"]) >= results[i,"mu_2"] * (1 - results[i,"theta_2"]))
           results[i,"State"] <- "up"
         else
