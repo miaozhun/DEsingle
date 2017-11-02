@@ -1,4 +1,4 @@
-![Logo](http://wx2.sinaimg.cn/mw1024/611a7c1dly1fgbsgev1zlj20e40373yq.jpg)
+![Logo](https://github.com/miaozhun/DEsingle/blob/master/DEsingle%20LOGO.png?raw=true)
 # DEsingle
 An R package for differential expression analysis of single-cell RNA-seq data.
 
