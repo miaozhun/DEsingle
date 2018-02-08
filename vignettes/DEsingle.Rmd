@@ -1,7 +1,7 @@
 ---
 title: "DEsingle"
-author: "Miao Zhun"
-date: "2018-02-07"
+author: "Zhun Miao"
+date: "2018-02-08"
 output: html_document
 ---
 
@@ -9,22 +9,76 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## DEsingle
+![](https://github.com/miaozhun/DEsingle/raw/master/DEsingle%20LOGO.png?raw=true)
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+## Introduction
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+***DEsingle*** is an R package for differential expression analysis of single-cell RNA-seq (scRNA-seq) data. It will detect the differentially expressed genes between two specified groups of cells in a read counts matrix of scRNA-seq data.
 
-```{r cars}
-summary(cars)
+## Input
+
+The main input `counts` is a non-negative integer matrix of scRNA-seq raw read counts, whose rows are genes and columns are samples/cells. The other input `group` is a vector of factor which specifies the two groups to be compared, corresponding to the columns in the `counts` matrix.
+
+Users can load the test data in DEsingle by
+
+```{r load TestData}
+library(DEsingle)
+data(TestData)
 ```
 
-## Including Plots
+The object `counts` in `TestData` is a toy data which has 200 genes (rows) and 150 cells (columns).
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r show counts}
+dim(counts)
+counts[1:6, 1:6]
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+The object `group` in `TestData` is a vector of factor which has two levels and equal length to the column number of `counts`.
+
+```{r show group}
+length(group)
+summary(group)
+```
+
+## Usage
+
+Here is an example to run DEsingle on the toy data:
+
+
+```{r usage, eval = FALSE}
+# Load library and the test data for DEsingle
+library(DEsingle)
+data(TestData)
+
+# Specifying the two groups to be compared
+# The sample number in group 1 and group 2 is 50 and 100 respectively
+group <- factor(c(rep(1,50), rep(2,100)))
+
+# Detecting the differentially expressed genes
+results <- DEsingle(counts = counts, group = group)
+
+# Dividing the differentially expressed genes into 3 categories
+results.classified <- DEtype(results = results, threshold = 0.05)
+```
+
+## Output
+
+The output of DEsingle is a matrix containing the differential expression (DE) analysis results, whose rows are genes and columns contain the following items:
+
+* `theta_1`, `theta_2`, `mu_1`, `mu_2`, `size_1`, `size_2`, `prob_1`, `prob_2`: MLE of the zero-inflated negative binomial distribution's parameters of group 1 and group 2.
+* `total_mean_1`, `total_mean_2`: Mean of read counts of group 1 and group 2.
+* `foldChange`: total_mean_1/total_mean_2.
+* `norm_total_mean_1`, `norm_total_mean_2`: Mean of normalized read counts of group 1 and group 2.
+* `norm_foldChange`: norm_total_mean_1/norm_total_mean_2.
+* `chi2LR1`: Chi-square statistic for hypothesis testing of H0.
+* `pvalue_LR2`: P value of hypothesis testing of H20 (Used to determine the type of a DE gene).
+* `pvalue_LR3`: P value of hypothesis testing of H30 (Used to determine the type of a DE gene).
+* `FDR_LR2`: Adjusted P value of pvalue_LR2 using Benjamini & Hochberg's method (Used to determine the type of a DE gene).
+* `FDR_LR3`: Adjusted P value of pvalue_LR3 using Benjamini & Hochberg's method (Used to determine the type of a DE gene).
+* `pvalue`: P value of hypothesis testing of H0 (Used to determine whether a gene is a DE gene).
+* `pvalue.adj.FDR`: Adjusted P value of H0's pvalue using Benjamini & Hochberg's method (Used to determine whether a gene is a DE gene).
+* `Remark`: Record of abnormal program information.
+* `Type`: Types of DE genes. *DEs* represents differential expression status; *DEa* represents differential expression abundance; *DEg* represents general differential expression.
+* `State`: State of DE genes, *up* represents up-regulated; *down* represents down-regulated.
+
+
