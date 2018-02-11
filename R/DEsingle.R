@@ -1,9 +1,9 @@
 #' DEsingle: Detecting differentially expressed genes from scRNA-seq data
 #'
-#' This function is used to detect differentially expressed genes from single-cell RNA-seq (scRNA-seq) data. It takes a non-negative integer matrix of single-cell RNA-seq read counts as input. So users should map the reads (obtained from sequencing libraries of the samples) to the corresponding genome in advance, then count the reads mapped to each gene according to the gene annotation.
+#' This function is used to detect differentially expressed genes between two specified groups of cells in a read counts matrix of single-cell RNA-seq (scRNA-seq) data. It takes a non-negative integer matrix of scRNA-seq raw read counts as input. So users should map the reads (obtained from sequencing libraries of the samples) to the corresponding genome and count the reads mapped to each gene according to the gene annotation to get the raw read counts matrix in advance.
 #'
-#' @param counts A non-negative integer matrix of scRNA-seq read counts, rows are genes and columns are samples.
-#' @param group A factor specifying the two conditions/groups to be compared, corresponding to the column of the counts matrix.
+#' @param counts A non-negative integer matrix of scRNA-seq raw read counts, whose rows are genes and columns are samples/cells.
+#' @param group A vector of factor which specifies the two groups to be compared, corresponding to the columns in the counts matrix.
 #' @return
 #' A matrix containing the differential expression (DE) analysis results, rows are genes and columns contain the following items:
 #' \itemize{
@@ -22,7 +22,7 @@
 #'   \item Remark: Record of abnormal program information.
 #' }
 #'
-#' @author Zhun Miao; Xuegong Zhang.
+#' @author Zhun Miao.
 #' @seealso
 #' \code{\link{DEtype}}, for the classification of differentially expressed genes found by \code{\link{DEsingle}}.
 #'
@@ -41,7 +41,7 @@
 #' results <- DEsingle(counts = counts, group = group)
 #'
 #' # Dividing the differentially expressed genes into 3 categories
-#' results <- DEtype(results = results, threshold = 0.05)
+#' results.classified <- DEtype(results = results, threshold = 0.05)
 #'
 #' @importFrom pscl zeroinfl
 #' @importFrom gamlss gamlssML
