@@ -27,7 +27,7 @@ group <- factor(c(rep(1,50), rep(2,100)))
 results <- DEsingle(counts = counts, group = group)
 
 # Dividing the differentially expressed genes into 3 categories
-results <- DEtype(results = results, threshold = 0.05)
+results.classified <- DEtype(results = results, threshold = 0.05)
 
 }
 \seealso{
