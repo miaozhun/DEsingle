@@ -30,6 +30,8 @@ results <- DEsingle(counts = counts, group = group)
 results.classified <- DEtype(results = results, threshold = 0.05)
 ```
 # Help
+Using `browseVignettes("DEsingle")` to see the vignettes of DEsingle after installation.
+
 Using the following code in R to get access to the help documentation for DEsingle:
 ```
 # Documentation for DEsingle
