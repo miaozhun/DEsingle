@@ -2,11 +2,19 @@
 title: "DEsingle"
 author: "Zhun Miao"
 date: "2018-02-08"
-output: html_document
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{DEsingle}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  collapse = T,
+  comment = "#>"
+)
 ```
 
 ![](https://github.com/miaozhun/DEsingle/raw/master/DEsingle%20LOGO.png?raw=true)
