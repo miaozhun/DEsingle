@@ -1,11 +1,11 @@
 #' DEtype: Classifying differentially expressed genes from DEsingle
 #'
-#' This function is used to classify the differentially expressed genes of single-cell RNA-seq (scRNA-seq) data found by DEsingle. It takes the results matrix of DEsingle as input.
+#' This function is used to classify the differentially expressed genes of single-cell RNA-seq (scRNA-seq) data found by DEsingle. It takes the output results matrix of DEsingle as input.
 #'
-#' @param results A matrix containing the differential expression analysis results from DEsingle.
+#' @param results A result matrix of DEsingle output, which contains the unclassified differential expression analysis results.
 #' @param threshold A number of (0,1) to specify the threshold of FDR.
 #' @return
-#' A matrix containing the differential expression (DE) analysis results and DE gene types.
+#' A matrix containing the differential expression (DE) analysis results and DE gene types and states.
 #' \itemize{
 #'   \item theta_1, theta_2, mu_1, mu_2, size_1, size_2, prob_1, prob_2: MLE of the zero-inflated negative binomial distribution's parameters of group 1 and group 2.
 #'   \item total_mean_1, total_mean_2: Mean of read counts of group 1 and group 2.
@@ -20,10 +20,11 @@
 #'   \item pvalue: P value of hypothesis testing of H0 (Used to determine whether a gene is a DE gene).
 #'   \item pvalue.adj.FDR: Adjusted P value of H0's pvalue using Benjamini & Hochberg's method (Used to determine whether a gene is a DE gene).
 #'   \item Remark: Record of abnormal program information.
-#'   \item Type: Types of DE genes. 0 represents DE 0; 1 represents DE 1; 2 represents DE both.
+#'   \item Type: Types of DE genes. DEs represents differential expression status; DEa represents differential expression abundance; DEg represents general differential expression.
+#'   \item State: State of DE genes, up represents up-regulated; down represents down-regulated.
 #' }
 #'
-#' @author Zhun Miao; Xuegong Zhang.
+#' @author Zhun Miao.
 #' @seealso
 #' \code{\link{DEsingle}}, for the detection of differentially expressed genes from scRNA-seq data.
 #'
@@ -42,7 +43,7 @@
 #' results <- DEsingle(counts = counts, group = group)
 #'
 #' # Dividing the differentially expressed genes into 3 categories
-#' results <- DEtype(results = results, threshold = 0.05)
+#' results.classified <- DEtype(results = results, threshold = 0.05)
 #'
 #' @importFrom pscl zeroinfl
 #' @importFrom gamlss gamlssML
@@ -130,7 +131,7 @@ DEtype <- function(results, threshold){
 #' results <- DEsingle(counts = counts, group = group)
 #'
 #' # Dividing the differentially expressed genes into 3 categories
-#' results <- DEtype(results = results, threshold = 0.05)
+#' results.classified <- DEtype(results = results, threshold = 0.05)
 #'
 NULL
 
@@ -169,7 +170,7 @@ NULL
 #' results <- DEsingle(counts = counts, group = group)
 #'
 #' # Dividing the differentially expressed genes into 3 categories
-#' results <- DEtype(results = results, threshold = 0.05)
+#' results.classified <- DEtype(results = results, threshold = 0.05)
 #'
 NULL
 
