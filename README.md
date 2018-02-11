@@ -1,6 +1,6 @@
 ![Logo](https://github.com/miaozhun/DEsingle/blob/master/DEsingle%20LOGO.png?raw=true)
 # DEsingle
-An R package for differential expression analysis of single-cell RNA-seq data.
+***DEsingle*** is an R package for differential expression analysis of single-cell RNA-seq (scRNA-seq) data. It will detect the differentially expressed genes between two specified groups of cells in a read counts matrix of scRNA-seq data.
 
 # Install DEsingle
 To install DEsingle R package, just execute the following code in R console:
@@ -9,7 +9,7 @@ To install DEsingle R package, just execute the following code in R console:
 if(!require(devtools)) install.packages("devtools")
 
 # Install DEsingle
-install_github("miaozhun/DEsingle")
+install_github("miaozhun/DEsingle", build_vignettes = TRUE)
 ```
 
 # Examples
@@ -27,7 +27,7 @@ group <- factor(c(rep(1,50), rep(2,100)))
 results <- DEsingle(counts = counts, group = group)
 
 # Dividing the differentially expressed genes into 3 categories
-results <- DEtype(results = results, threshold = 0.05)
+results.classified <- DEtype(results = results, threshold = 0.05)
 ```
 # Help
 Using the following code in R to get access to the help documentation for DEsingle:
@@ -44,7 +44,7 @@ Using the following code in R to get access to the help documentation for DEsing
 ?counts
 ?group
 ```
-# Authors
-Zhun Miao, Xuegong Zhang <<zhangxg@tsinghua.edu.cn>>
+# Author
+Zhun Miao <<miaoz13@mails.tsinghua.edu.cn>>
 
 MOE Key Laboratory of Bioinformatics; Bioinformatics Division and Center for Synthetic & Systems Biology, TNLIST; Department of Automation, Tsinghua University, Beijing 100084, China
