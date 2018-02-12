@@ -1,7 +1,7 @@
 Package: DEsingle
 Type: Package
 Title: Detecting Differentially Expressed Genes from single-cell RNA-seq data
-Version: 0.1.0
+Version: 0.99.0
 Date: 2017-06-06
 Author: Zhun Miao <miaoz13@mails.tsinghua.edu.cn>
 Maintainer: Zhun Miao <miaoz13@mails.tsinghua.edu.cn>
