@@ -57,7 +57,15 @@
 
 
 DEtype <- function(results, threshold){
-  results <- as.data.frame(results)
+  # Invalid input judge
+  if(class(results) != "data.frame")
+    stop("Invalid input of wrong data type")
+  if(ncol(results) != 22)
+    stop("Invalid input of wrong column number")
+  if(colnames(results)[21] != "pvalue.adj.FDR" | colnames(results)[18] != "FDR_LR2" | colnames(results)[19] != "FDR_LR3")
+    stop("Invalid input of wrong column name")
+
+  # Classify the types of DE genes
   results <- cbind(results, NA, NA)
   colnames(results)[c(ncol(results)-1, ncol(results))] <- c("Type", "State")
   for(i in 1:nrow(results)){
