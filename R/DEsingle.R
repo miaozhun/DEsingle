@@ -577,10 +577,10 @@ DEsingle <- function(counts, group){
   results <- results[order(results[,"chi2LR1"], decreasing = T),]
   remove(lastFuncGrad, lastFuncParam, envir=.GlobalEnv)
   cat(paste0("\n\n ",sum(!is.na(results[,"Remark"])), " gene failed.\n\n"))
+  results <- as.data.frame(results)
   results
 
 }
-
 
 
 
