@@ -47,6 +47,6 @@ Use the following code in R to get access to the help documentation for DEsingle
 ?group
 ```
 # Author
-Zhun Miao <miaoz13 AT mails.tsinghua.edu.cn>
+Zhun Miao <<miaoz13@mails.tsinghua.edu.cn>>
 
 MOE Key Laboratory of Bioinformatics; Bioinformatics Division and Center for Synthetic & Systems Biology, TNLIST; Department of Automation, Tsinghua University, Beijing 100084, China
