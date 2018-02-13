@@ -31,8 +31,7 @@
 #' \code{\link{counts}} and \code{\link{group}}, a test data for DEsingle.
 #'
 #' @examples
-#' # Load library and the test data for DEsingle
-#' library(DEsingle)
+#' # Load test data for DEsingle
 #' data(TestData)
 #'
 #' # Specifying the two groups to be compared
@@ -127,8 +126,7 @@ DEtype <- function(results, threshold){
 #' \code{\link{counts}} and \code{\link{group}}, a test data for DEsingle.
 #'
 #' @examples
-#' # Load library and the test data for DEsingle
-#' library(DEsingle)
+#' # Load test data for DEsingle
 #' data(TestData)
 #'
 #' # Specifying the two groups to be compared
@@ -166,8 +164,7 @@ NULL
 #' \code{\link{counts}} and \code{\link{group}}, a test data for DEsingle.
 #'
 #' @examples
-#' # Load library and the test data for DEsingle
-#' library(DEsingle)
+#' # Load test data for DEsingle
 #' data(TestData)
 #'
 #' # Specifying the two groups to be compared
