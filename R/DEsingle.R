@@ -29,8 +29,7 @@
 #' \code{\link{counts}} and \code{\link{group}}, a test data for DEsingle.
 #'
 #' @examples
-#' # Load library and the test data for DEsingle
-#' library(DEsingle)
+#' # Load test data for DEsingle
 #' data(TestData)
 #'
 #' # Specifying the two groups to be compared
@@ -77,7 +76,7 @@ DEsingle <- function(counts, group){
   for (i in 1:geneNum_NAZ)
   {
     gene_NZ <- counts_NAZ[i,counts_NAZ[i,] > 0]
-    GEOmean[i] <- exp(sum(log(gene_NZ), na.rm=T) / length(gene_NZ))
+    GEOmean[i] <- exp(sum(log(gene_NZ), na.rm=TRUE) / length(gene_NZ))
   }
   S <- rep(NA, sampleNum)
   counts_norm <- counts_NAZ
@@ -91,8 +90,8 @@ DEsingle <- function(counts, group){
 
   # Log likelihood functions
   logL <- function(counts_1, theta_1, size_1, prob_1, counts_2, theta_2, size_2, prob_2){
-    logL_1 <- sum(dzinegbin(counts_1, size = size_1, prob = prob_1, pstr0 = theta_1, log = T))
-    logL_2 <- sum(dzinegbin(counts_2, size = size_2, prob = prob_2, pstr0 = theta_2, log = T))
+    logL_1 <- sum(dzinegbin(counts_1, size = size_1, prob = prob_1, pstr0 = theta_1, log = TRUE))
+    logL_2 <- sum(dzinegbin(counts_2, size = size_2, prob = prob_2, pstr0 = theta_2, log = TRUE))
     logL <- logL_1 + logL_2
     logL
   }
@@ -102,8 +101,8 @@ DEsingle <- function(counts, group){
     prob_1_resL2 <- param[3]
     size_2_resL2 <- param[4]
     prob_2_resL2 <- param[5]
-    logL_1 <- sum(dzinegbin(counts_1, size = size_1_resL2, prob = prob_1_resL2, pstr0 = theta_resL2, log = T))
-    logL_2 <- sum(dzinegbin(counts_2, size = size_2_resL2, prob = prob_2_resL2, pstr0 = theta_resL2, log = T))
+    logL_1 <- sum(dzinegbin(counts_1, size = size_1_resL2, prob = prob_1_resL2, pstr0 = theta_resL2, log = TRUE))
+    logL_2 <- sum(dzinegbin(counts_2, size = size_2_resL2, prob = prob_2_resL2, pstr0 = theta_resL2, log = TRUE))
     logL <- logL_1 + logL_2
     logL
   }
@@ -113,8 +112,8 @@ DEsingle <- function(counts, group){
     prob_1_resL2 <- param[2]
     size_2_resL2 <- param[3]
     prob_2_resL2 <- param[4]
-    logL_1 <- sum(dzinegbin(counts_1, size = size_1_resL2, prob = prob_1_resL2, pstr0 = theta_resL2, log = T))
-    logL_2 <- sum(dzinegbin(counts_2, size = size_2_resL2, prob = prob_2_resL2, pstr0 = theta_resL2, log = T))
+    logL_1 <- sum(dzinegbin(counts_1, size = size_1_resL2, prob = prob_1_resL2, pstr0 = theta_resL2, log = TRUE))
+    logL_2 <- sum(dzinegbin(counts_2, size = size_2_resL2, prob = prob_2_resL2, pstr0 = theta_resL2, log = TRUE))
     logL <- logL_1 + logL_2
     logL
   }
@@ -123,8 +122,8 @@ DEsingle <- function(counts, group){
     size_resL3 <- param[2]
     prob_resL3 <- param[3]
     theta_2_resL3 <- param[4]
-    logL_1 <- sum(dzinegbin(counts_1, size = size_resL3, prob = prob_resL3, pstr0 = theta_1_resL3, log = T))
-    logL_2 <- sum(dzinegbin(counts_2, size = size_resL3, prob = prob_resL3, pstr0 = theta_2_resL3, log = T))
+    logL_1 <- sum(dzinegbin(counts_1, size = size_resL3, prob = prob_resL3, pstr0 = theta_1_resL3, log = TRUE))
+    logL_2 <- sum(dzinegbin(counts_2, size = size_resL3, prob = prob_resL3, pstr0 = theta_2_resL3, log = TRUE))
     logL <- logL_1 + logL_2
     logL
   }
@@ -133,8 +132,8 @@ DEsingle <- function(counts, group){
     size_resL3 <- param[1]
     prob_resL3 <- param[2]
     theta_2_resL3 <- param[3]
-    logL_1 <- sum(dzinegbin(counts_1, size = size_resL3, prob = prob_resL3, pstr0 = theta_1_resL3, log = T))
-    logL_2 <- sum(dzinegbin(counts_2, size = size_resL3, prob = prob_resL3, pstr0 = theta_2_resL3, log = T))
+    logL_1 <- sum(dzinegbin(counts_1, size = size_resL3, prob = prob_resL3, pstr0 = theta_1_resL3, log = TRUE))
+    logL_2 <- sum(dzinegbin(counts_2, size = size_resL3, prob = prob_resL3, pstr0 = theta_2_resL3, log = TRUE))
     logL <- logL_1 + logL_2
     logL
   }
@@ -143,8 +142,8 @@ DEsingle <- function(counts, group){
     size_resL3 <- param[2]
     prob_resL3 <- param[3]
     theta_2_resL3 <- 0
-    logL_1 <- sum(dzinegbin(counts_1, size = size_resL3, prob = prob_resL3, pstr0 = theta_1_resL3, log = T))
-    logL_2 <- sum(dzinegbin(counts_2, size = size_resL3, prob = prob_resL3, pstr0 = theta_2_resL3, log = T))
+    logL_1 <- sum(dzinegbin(counts_1, size = size_resL3, prob = prob_resL3, pstr0 = theta_1_resL3, log = TRUE))
+    logL_2 <- sum(dzinegbin(counts_2, size = size_resL3, prob = prob_resL3, pstr0 = theta_2_resL3, log = TRUE))
     logL <- logL_1 + logL_2
     logL
   }
@@ -153,8 +152,8 @@ DEsingle <- function(counts, group){
     size_resL3 <- param[1]
     prob_resL3 <- param[2]
     theta_2_resL3 <- param[3]
-    logL_1 <- sum(dzinegbin(counts_1, size = size_resL3, prob = prob_resL3, pstr0 = theta_1_resL3, log = T))
-    logL_2 <- sum(dzinegbin(counts_2, size = size_resL3, prob = prob_resL3, pstr0 = theta_2_resL3, log = T))
+    logL_1 <- sum(dzinegbin(counts_1, size = size_resL3, prob = prob_resL3, pstr0 = theta_1_resL3, log = TRUE))
+    logL_2 <- sum(dzinegbin(counts_2, size = size_resL3, prob = prob_resL3, pstr0 = theta_2_resL3, log = TRUE))
     logL <- logL_1 + logL_2
     logL
   }
@@ -163,8 +162,8 @@ DEsingle <- function(counts, group){
     size_resL3 <- param[2]
     prob_resL3 <- param[3]
     theta_2_resL3 <- 1
-    logL_1 <- sum(dzinegbin(counts_1, size = size_resL3, prob = prob_resL3, pstr0 = theta_1_resL3, log = T))
-    logL_2 <- sum(dzinegbin(counts_2, size = size_resL3, prob = prob_resL3, pstr0 = theta_2_resL3, log = T))
+    logL_1 <- sum(dzinegbin(counts_1, size = size_resL3, prob = prob_resL3, pstr0 = theta_1_resL3, log = TRUE))
+    logL_2 <- sum(dzinegbin(counts_2, size = size_resL3, prob = prob_resL3, pstr0 = theta_2_resL3, log = TRUE))
     logL <- logL_1 + logL_2
     logL
   }
@@ -173,8 +172,8 @@ DEsingle <- function(counts, group){
     size_resL3 <- param[1]
     prob_resL3 <- param[2]
     theta_2_resL3 <- 1
-    logL_1 <- sum(dzinegbin(counts_1, size = size_resL3, prob = prob_resL3, pstr0 = theta_1_resL3, log = T))
-    logL_2 <- sum(dzinegbin(counts_2, size = size_resL3, prob = prob_resL3, pstr0 = theta_2_resL3, log = T))
+    logL_1 <- sum(dzinegbin(counts_1, size = size_resL3, prob = prob_resL3, pstr0 = theta_1_resL3, log = TRUE))
+    logL_2 <- sum(dzinegbin(counts_2, size = size_resL3, prob = prob_resL3, pstr0 = theta_2_resL3, log = TRUE))
     logL <- logL_1 + logL_2
     logL
   }
@@ -183,8 +182,8 @@ DEsingle <- function(counts, group){
     size_resL3 <- param[1]
     prob_resL3 <- param[2]
     theta_2_resL3 <- 0
-    logL_1 <- sum(dzinegbin(counts_1, size = size_resL3, prob = prob_resL3, pstr0 = theta_1_resL3, log = T))
-    logL_2 <- sum(dzinegbin(counts_2, size = size_resL3, prob = prob_resL3, pstr0 = theta_2_resL3, log = T))
+    logL_1 <- sum(dzinegbin(counts_1, size = size_resL3, prob = prob_resL3, pstr0 = theta_1_resL3, log = TRUE))
+    logL_2 <- sum(dzinegbin(counts_2, size = size_resL3, prob = prob_resL3, pstr0 = theta_2_resL3, log = TRUE))
     logL <- logL_1 + logL_2
     logL
   }
@@ -574,7 +573,7 @@ DEsingle <- function(counts, group){
   results[,"FDR_LR2"] <- p.adjust(results[,"pvalue_LR2"], method="fdr")
   results[,"FDR_LR3"] <- p.adjust(results[,"pvalue_LR3"], method="fdr")
   results[,"pvalue.adj.FDR"] <- p.adjust(results[,"pvalue"], method="fdr")
-  results <- results[order(results[,"chi2LR1"], decreasing = T),]
+  results <- results[order(results[,"chi2LR1"], decreasing = TRUE),]
   remove(lastFuncGrad, lastFuncParam, envir=.GlobalEnv)
   cat(paste0("\n\n ",sum(!is.na(results[,"Remark"])), " gene failed.\n\n"))
   results <- as.data.frame(results)
