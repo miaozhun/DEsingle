@@ -10,6 +10,7 @@ License: GPL-2
 Encoding: UTF-8
 LazyData: true
 Imports:
+    stats,
     pscl (>= 1.4.9),
     gamlss (>= 4.4-0),
     VGAM (>= 1.0-2),
