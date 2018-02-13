@@ -33,8 +33,7 @@ A matrix containing the differential expression (DE) analysis results, rows are 
 This function is used to detect differentially expressed genes between two specified groups of cells in a read counts matrix of single-cell RNA-seq (scRNA-seq) data. It takes a non-negative integer matrix of scRNA-seq raw read counts as input. So users should map the reads (obtained from sequencing libraries of the samples) to the corresponding genome and count the reads mapped to each gene according to the gene annotation to get the raw read counts matrix in advance.
 }
 \examples{
-# Load library and the test data for DEsingle
-library(DEsingle)
+# Load test data for DEsingle
 data(TestData)
 
 # Specifying the two groups to be compared
