@@ -15,8 +15,7 @@ data(TestData)
 A matrix of read counts of single-cell RNA-seq data for testing of DEsingle.
 }
 \examples{
-# Load library and the test data for DEsingle
-library(DEsingle)
+# Load test data for DEsingle
 data(TestData)
 
 # Specifying the two groups to be compared
