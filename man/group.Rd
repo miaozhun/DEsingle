@@ -14,8 +14,7 @@ data(TestData)
 A factor specifying the two groups to be compared in test data \code{\link{counts}} for DEsingle.
 }
 \examples{
-# Load library and the test data for DEsingle
-library(DEsingle)
+# Load test data for DEsingle
 data(TestData)
 
 # Specifying the two groups to be compared
