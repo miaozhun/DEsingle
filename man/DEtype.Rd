@@ -35,8 +35,7 @@ A matrix containing the differential expression (DE) analysis results and DE gen
 This function is used to classify the differentially expressed genes of single-cell RNA-seq (scRNA-seq) data found by DEsingle. It takes the output results matrix of DEsingle as input.
 }
 \examples{
-# Load library and the test data for DEsingle
-library(DEsingle)
+# Load test data for DEsingle
 data(TestData)
 
 # Specifying the two groups to be compared
