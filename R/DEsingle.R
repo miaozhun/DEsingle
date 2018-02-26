@@ -56,22 +56,32 @@
 DEsingle <- function(counts, group){
 
   # Invalid input judge
-  counts <- data.matrix(counts)
+  counts <- as.matrix(counts)
+  if(sum(is.na(counts)) > 0)
+    stop("NA detected in 'counts' matrix")
   if(sum(counts < 0) > 0)
-    stop("Negative values in counts matrix")
+    stop("Negative value detected in 'counts' matrix")
+  if(all(counts == 0))
+    stop("All elements of 'counts' matrix are zero")
+  if(any(colSums(counts) == 0))
+    warning("Library size of zero detected in 'counts' matrix")
+
+  if(!class(group) == "factor")
+    stop("Wrong data type of 'group'")
   if(length(levels(group)) != 2)
-    stop("Wrong number of levels in group")
-  sampleNum_1 <- table(group)[[1]]
-  sampleNum_2 <- table(group)[[2]]
-  sampleNum <- ncol(counts)
-  if(sampleNum != sampleNum_1 + sampleNum_2)
-    stop("Unmached counts matrix and group")
+    stop("Wrong number of levels in 'group'")
+  if(table(group)[1] < 2 | table(group)[2] < 2)
+    stop("Too few samples (< 2) in one group")
+  if(ncol(counts) != length(group))
+    stop("Length of 'group' must equal column number of 'counts'")
 
   # Filter all-zero genes
+  message("Removing ", sum(rowSums(counts) == 0), " rows of genes with all zero counts")
   counts_NAZ <- counts[rowSums(counts) != 0,]
   geneNum_NAZ <- nrow(counts_NAZ)
 
   # Normalization
+  sampleNum <- ncol(counts)
   GEOmean <- rep(NA,geneNum_NAZ)
   for (i in 1:geneNum_NAZ)
   {
@@ -201,8 +211,8 @@ DEsingle <- function(counts, group){
   {
     cat("\r",paste0("DEsingle is analyzing ", i," of ",geneNum_NAZ," expressed genes"))
 
-    counts_1 <- counts_norm[i,1:sampleNum_1]
-    counts_2 <- counts_norm[i,(sampleNum_1 + 1):sampleNum]
+    counts_1 <- counts_norm[i, group == levels(group)[1]]
+    counts_2 <- counts_norm[i, group == levels(group)[2]]
 
     # MLE of parameters of ZINB counts_1
     if(sum(counts_1 == 0) > 0){
@@ -558,8 +568,8 @@ DEsingle <- function(counts, group){
     results[i,"size_2"] <- size_2
     results[i,"prob_1"] <- prob_1
     results[i,"prob_2"] <- prob_2
-    results[i,"total_mean_1"] <- mean(counts_NAZ[i,1:sampleNum_1])
-    results[i,"total_mean_2"] <- mean(counts_NAZ[i,(sampleNum_1 + 1):sampleNum])
+    results[i,"total_mean_1"] <- mean(counts_NAZ[i, group == levels(group)[1]])
+    results[i,"total_mean_2"] <- mean(counts_NAZ[i, group == levels(group)[2]])
     results[i,"foldChange"] <- results[i,"total_mean_1"] / results[i,"total_mean_2"]
     results[i,"norm_total_mean_1"] <- mean(counts_1)
     results[i,"norm_total_mean_2"] <- mean(counts_2)
