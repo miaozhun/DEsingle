@@ -209,7 +209,7 @@ DEsingle <- function(counts, group){
   results <- matrix(data=NA, nrow = geneNum_NAZ, ncol = 22, dimnames = list(row.names(counts_norm), c("theta_1", "theta_2", "mu_1", "mu_2", "size_1", "size_2", "prob_1", "prob_2", "total_mean_1", "total_mean_2", "foldChange", "norm_total_mean_1", "norm_total_mean_2", "norm_foldChange", "chi2LR1", "pvalue_LR2", "pvalue_LR3", "FDR_LR2", "FDR_LR3", "pvalue", "pvalue.adj.FDR", "Remark")))
   for(i in 1:geneNum_NAZ)
   {
-    cat("\r",paste0("DEsingle is analyzing ", i," of ",geneNum_NAZ," expressed genes"))
+    message("\r",paste0("DEsingle is analyzing ", i," of ",geneNum_NAZ," expressed genes"))
 
     counts_1 <- counts_norm[i, group == levels(group)[1]]
     counts_2 <- counts_norm[i, group == levels(group)[2]]
