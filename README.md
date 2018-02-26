@@ -97,13 +97,13 @@ The output of `DEsingle` is a matrix containing the differential expression (DE)
 
 
 ## Interpretation of results
-For the interpretation of results when DEsingle applied to real data, please refer to our [*manuscript*](https://www.biorxiv.org/content/early/2017/09/08/173997).
+For the interpretation of results when `DEsingle` applied to real data, please refer to our [*manuscript*](https://www.biorxiv.org/content/early/2017/09/08/173997).
 
 
 ## Help
-Use `browseVignettes("DEsingle")` to see the vignettes of DEsingle in R after installation.
+Use `browseVignettes("DEsingle")` to see the vignettes of `DEsingle` in R after installation.
 
-Use the following code in R to get access to the help documentation for DEsingle:
+Use the following code in R to get access to the help documentation for `DEsingle`:
 ```
 # Documentation for DEsingle
 ?DEsingle
@@ -120,7 +120,7 @@ Use the following code in R to get access to the help documentation for DEsingle
 
 
 ## Author
-Zhun Miao <<miaoz13@mails.tsinghua.edu.cn>>
+*Zhun Miao* <<miaoz13@mails.tsinghua.edu.cn>>
 
 MOE Key Laboratory of Bioinformatics; Bioinformatics Division and Center for Synthetic & Systems Biology, TNLIST; Department of Automation, Tsinghua University, Beijing 100084, China.
 
