@@ -77,7 +77,7 @@ DEsingle <- function(counts, group){
 
   # Filter all-zero genes
   if(any(rowSums(counts) == 0))
-    message("Removing", sum(rowSums(counts) == 0), "rows of genes with all zero counts")
+    message("Removing ", sum(rowSums(counts) == 0), " rows of genes with all zero counts")
   counts_NAZ <- counts[rowSums(counts) != 0,]
   geneNum_NAZ <- nrow(counts_NAZ)
 
