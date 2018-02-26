@@ -101,7 +101,7 @@ For the interpretation of results when DEsingle applied to real data, please ref
 
 
 ## Help
-Use `browseVignettes("DEsingle")` to see the vignettes of DEsingle after installation.
+Use `browseVignettes("DEsingle")` to see the vignettes of DEsingle in R after installation.
 
 Use the following code in R to get access to the help documentation for DEsingle:
 ```
@@ -122,4 +122,5 @@ Use the following code in R to get access to the help documentation for DEsingle
 ## Author
 Zhun Miao <<miaoz13@mails.tsinghua.edu.cn>>
 
-MOE Key Laboratory of Bioinformatics; Bioinformatics Division and Center for Synthetic & Systems Biology, TNLIST; Department of Automation, Tsinghua University, Beijing 100084, China
+MOE Key Laboratory of Bioinformatics; Bioinformatics Division and Center for Synthetic & Systems Biology, TNLIST; Department of Automation, Tsinghua University, Beijing 100084, China.
+
