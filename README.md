@@ -75,6 +75,30 @@ results.classified <- DEtype(results = results, threshold = 0.05)
 ```
 
 
+## Cooperation with the SingleCellExperiment class
+The [`SingleCellExperiment`](https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html) class is a widely used S4 class for storing single-cell genomics data. `DEsingle` also could cooperate with the `SingleCellExperiment` data representation. Here is an example.
+
+```{r demo2, eval = FALSE}
+# Load library and the test data for DEsingle
+library(DEsingle)
+if(!require("SingleCellExperiment")) install.packages("SingleCellExperiment")
+data(TestData)
+
+# Convert the test data in DEsingle to SingleCellExperiment data representation
+sce <- SingleCellExperiment(assays = list(counts = as.matrix(counts)))
+
+# Specifying the two groups to be compared
+# The sample number in group 1 and group 2 is 50 and 100 respectively
+group <- factor(c(rep(1,50), rep(2,100)))
+
+# Detecting the differentially expressed genes with SingleCellExperiment input sce
+results <- DEsingle(counts = counts(sce), group = group)
+
+# Dividing the differentially expressed genes into 3 categories
+results.classified <- DEtype(results = results, threshold = 0.05)
+```
+
+
 ## Output
 
 The output of `DEsingle` is a matrix containing the differential expression (DE) analysis results, whose rows are genes and columns contain the following items:
