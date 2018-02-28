@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-![](https://github.com/miaozhun/DEsingle/raw/master/DEsingle%20LOGO.png?raw=true)
+![](https://github.com/miaozhun/DEsingle/blob/master/inst/DEsingle_LOGO.png?raw=true)
 
 
 ## Introduction
