@@ -3,7 +3,7 @@
 ### *Zhun Miao*
 ### *2017-06-06*
 
-![Logo](https://github.com/miaozhun/DEsingle/blob/master/DEsingle%20LOGO.png?raw=true)
+![Logo](https://github.com/miaozhun/DEsingle/blob/master/inst/DEsingle_LOGO.png?raw=true)
 
 
 ## Introduction
