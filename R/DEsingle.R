@@ -254,7 +254,7 @@ DEsingle <- function(counts, group){
       if('try-error' %in% class(nb_try)){
         nb_try_twice <- try(fitdistr(counts_1, "Negative Binomial"), silent=TRUE)
         if('try-error' %in% class(nb_try_twice)){
-          nb_try_again <- try(mle2(counts_1~dnbinom(mu=exp(logmu),size=1/invk), data=data.frame(counts_1), start=list(logmu=0,invk=1), method="L-BFGS-B", lower=c(-Inf,1e-8)), silent=TRUE)
+          nb_try_again <- try(mle2(counts_1~dnbinom(mu=exp(logmu),size=1/invk), data=data.frame(counts_1), start=list(logmu=0,invk=1), method="L-BFGS-B", lower=c(logmu=-Inf,invk=1e-8)), silent=TRUE)
           if('try-error' %in% class(nb_try_again)){
             nb_try_fourth <- try(glm.nb(formula = counts_1 ~ 1), silent=TRUE)
             if('try-error' %in% class(nb_try_fourth)){
@@ -330,7 +330,7 @@ DEsingle <- function(counts, group){
       if('try-error' %in% class(nb_try)){
         nb_try_twice <- try(fitdistr(counts_2, "Negative Binomial"), silent=TRUE)
         if('try-error' %in% class(nb_try_twice)){
-          nb_try_again <- try(mle2(counts_2~dnbinom(mu=exp(logmu),size=1/invk), data=data.frame(counts_2), start=list(logmu=0,invk=1), method="L-BFGS-B", lower=c(-Inf,1e-8)), silent=TRUE)
+          nb_try_again <- try(mle2(counts_2~dnbinom(mu=exp(logmu),size=1/invk), data=data.frame(counts_2), start=list(logmu=0,invk=1), method="L-BFGS-B", lower=c(logmu=-Inf,invk=1e-8)), silent=TRUE)
           if('try-error' %in% class(nb_try_again)){
             nb_try_fourth <- try(glm.nb(formula = counts_2 ~ 1), silent=TRUE)
             if('try-error' %in% class(nb_try_fourth)){
@@ -495,7 +495,7 @@ DEsingle <- function(counts, group){
       if('try-error' %in% class(nb_try)){
         nb_try_twice <- try(fitdistr(c(counts_1, counts_2), "Negative Binomial"), silent=TRUE)
         if('try-error' %in% class(nb_try_twice)){
-          nb_try_again <- try(mle2(c(counts_1, counts_2)~dnbinom(mu=exp(logmu),size=1/invk), data=data.frame(c(counts_1, counts_2)), start=list(logmu=0,invk=1), method="L-BFGS-B", lower=c(-Inf,1e-8)), silent=TRUE)
+          nb_try_again <- try(mle2(c(counts_1, counts_2)~dnbinom(mu=exp(logmu),size=1/invk), data=data.frame(c(counts_1, counts_2)), start=list(logmu=0,invk=1), method="L-BFGS-B", lower=c(logmu=-Inf,invk=1e-8)), silent=TRUE)
           if('try-error' %in% class(nb_try_again)){
             nb_try_fourth <- try(glm.nb(formula = c(counts_1, counts_2) ~ 1), silent=TRUE)
             if('try-error' %in% class(nb_try_fourth)){
