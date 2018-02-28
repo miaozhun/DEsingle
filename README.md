@@ -78,10 +78,10 @@ results.classified <- DEtype(results = results, threshold = 0.05)
 ## Cooperation with the SingleCellExperiment class
 The [`SingleCellExperiment`](https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html) class is a widely used S4 class for storing single-cell genomics data. `DEsingle` also could cooperate with the `SingleCellExperiment` data representation. Here is an example.
 
-```{r demo2, eval = FALSE}
+```{r demo2}
 # Load library and the test data for DEsingle
 library(DEsingle)
-if(!require("SingleCellExperiment")) install.packages("SingleCellExperiment")
+if(!require("SingleCellExperiment")) biocLite("SingleCellExperiment")
 data(TestData)
 
 # Convert the test data in DEsingle to SingleCellExperiment data representation
