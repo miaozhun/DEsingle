@@ -26,7 +26,7 @@
 #' @seealso
 #' \code{\link{DEtype}}, for the classification of differentially expressed genes found by \code{\link{DEsingle}}.
 #'
-#' \code{\link{counts}} and \code{\link{group}}, a test data for DEsingle.
+#' \code{\link{TestData}}, a test dataset for DEsinge.
 #'
 #' @examples
 #' # Load test data for DEsingle
