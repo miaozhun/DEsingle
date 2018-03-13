@@ -42,18 +42,23 @@
 #' # Dividing the differentially expressed genes into 3 categories
 #' results.classified <- DEtype(results = results, threshold = 0.05)
 #'
-#' @importFrom pscl zeroinfl
-#' @importFrom gamlss gamlssML
-#' @importFrom VGAM dzinegbin
-#' @importFrom MASS glm.nb fitdistr
-#' @importFrom bbmle mle2
-#' @importFrom maxLik maxLik
 #' @import stats
+#' @import SingleCellExperiment
+#' @importFrom MASS glm.nb fitdistr
+#' @importFrom VGAM dzinegbin
+#' @importFrom bbmle mle2
+#' @importFrom gamlss gamlssML
+#' @importFrom maxLik maxLik
+#' @importFrom pscl zeroinfl
 #' @export
 
 
 
 DEsingle <- function(counts, group){
+
+  # Handle for SingleCellExperiment
+  if(class(counts)[1] == "SingleCellExperiment")
+    counts <- counts(counts)
 
   # Invalid input judge
   counts <- as.matrix(counts)
