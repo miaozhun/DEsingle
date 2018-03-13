@@ -28,7 +28,7 @@
 #' @seealso
 #' \code{\link{DEsingle}}, for the detection of differentially expressed genes from scRNA-seq data.
 #'
-#' \code{\link{counts}} and \code{\link{group}}, a test data for DEsingle.
+#' \code{\link{TestData}}, a test dataset for DEsinge.
 #'
 #' @examples
 #' # Load test data for DEsingle
