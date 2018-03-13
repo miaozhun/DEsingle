@@ -2,6 +2,7 @@
 
 export(DEsingle)
 export(DEtype)
+import(SingleCellExperiment)
 import(stats)
 importFrom(MASS,fitdistr)
 importFrom(MASS,glm.nb)
