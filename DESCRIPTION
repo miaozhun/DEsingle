@@ -20,12 +20,12 @@ Depends: R (>= 3.4.3)
 Imports:
     stats,
     MASS (>= 7.3-45),
-	VGAM (>= 1.0-2),
+    VGAM (>= 1.0-2),
     bbmle (>= 1.0.18),
-	gamlss (>= 4.4-0),
+    gamlss (>= 4.4-0),
     maxLik (>= 1.3-4),
-	pscl (>= 1.4.9),
-	SingleCellExperiment (>= 1.0.0)
+    pscl (>= 1.4.9),
+    SingleCellExperiment (>= 1.0.0)
 Suggests:
     knitr,
     rmarkdown
