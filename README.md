@@ -159,10 +159,3 @@ You are also welcome to contact the author by email for help.
 
 MOE Key Laboratory of Bioinformatics; Bioinformatics Division and Center for Synthetic & Systems Biology, TNLIST; Department of Automation, Tsinghua University, Beijing 100084, China.
 
-
-## Session info
-
-```{r sessionInfo}
-sessionInfo()
-```
-
