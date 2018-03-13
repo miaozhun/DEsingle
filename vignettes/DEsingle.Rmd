@@ -79,6 +79,7 @@ results.classified <- DEtype(results = results, threshold = 0.05)
 
 
 ## Cooperation with the SingleCellExperiment class
+
 The [`SingleCellExperiment`](https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html) class is a widely used S4 class for storing single-cell genomics data. `DEsingle` also could take the `SingleCellExperiment` data representation as input. Here is an example.
 
 ```{r demo2}
@@ -124,21 +125,26 @@ The output of `DEsingle` is a matrix containing the differential expression (DE)
 
 
 ## Interpretation of results
+
 For the interpretation of results when `DEsingle` applied to real data, please refer to our [*manuscript*](https://www.biorxiv.org/content/early/2017/09/08/173997).
 
 
 ## Help
+
 Use `browseVignettes("DEsingle")` to see the vignettes of `DEsingle` in R after installation.
 
 Use the following code in R to get access to the help documentation for `DEsingle`:
+
 ```
 # Documentation for DEsingle
 ?DEsingle
 ```
+
 ```
 # Documentation for DEtype
 ?DEtype
 ```
+
 ```
 # Documentation for TestData
 ?TestData
@@ -150,6 +156,7 @@ You are also welcome to contact the author by email for help.
 
 
 ## Author
+
 *Zhun Miao* <<miaoz13@mails.tsinghua.edu.cn>>
 
 MOE Key Laboratory of Bioinformatics; Bioinformatics Division and Center for Synthetic & Systems Biology, TNLIST; Department of Automation, Tsinghua University, Beijing 100084, China.
