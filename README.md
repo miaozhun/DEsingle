@@ -16,6 +16,7 @@ For more information, please refer to the [original manuscript](https://www.bior
 
 
 ## Install DEsingle
+
 To install `DEsingle` R package, just execute the following code in R console:
 ```
 # Install devtools if needed
@@ -76,7 +77,8 @@ results.classified <- DEtype(results = results, threshold = 0.05)
 
 
 ## Cooperation with the SingleCellExperiment class
-The [`SingleCellExperiment`](https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html) class is a widely used S4 class for storing single-cell genomics data. `DEsingle` also could cooperate with the `SingleCellExperiment` data representation. Here is an example.
+
+The [`SingleCellExperiment`](https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html) class is a widely used S4 class for storing single-cell genomics data. `DEsingle` also could take the `SingleCellExperiment` data representation as input. Here is an example.
 
 ```{r demo2}
 # Load library and the test data for DEsingle
@@ -92,7 +94,7 @@ sce <- SingleCellExperiment(assays = list(counts = as.matrix(counts)))
 group <- factor(c(rep(1,50), rep(2,100)))
 
 # Detecting the differentially expressed genes with SingleCellExperiment input sce
-results <- DEsingle(counts = counts(sce), group = group)
+results <- DEsingle(counts = sce, group = group)
 
 # Dividing the differentially expressed genes into 3 categories
 results.classified <- DEtype(results = results, threshold = 0.05)
@@ -121,30 +123,46 @@ The output of `DEsingle` is a matrix containing the differential expression (DE)
 
 
 ## Interpretation of results
+
 For the interpretation of results when `DEsingle` applied to real data, please refer to our [*manuscript*](https://www.biorxiv.org/content/early/2017/09/08/173997).
 
 
 ## Help
+
 Use `browseVignettes("DEsingle")` to see the vignettes of `DEsingle` in R after installation.
 
 Use the following code in R to get access to the help documentation for `DEsingle`:
+
 ```
 # Documentation for DEsingle
 ?DEsingle
 ```
+
 ```
 # Documentation for DEtype
 ?DEtype
 ```
+
 ```
-# Documentation for counts and group in TestData
+# Documentation for TestData
+?TestData
 ?counts
 ?group
 ```
 
+You are also welcome to contact the author by email for help.
+
 
 ## Author
+
 *Zhun Miao* <<miaoz13@mails.tsinghua.edu.cn>>
 
 MOE Key Laboratory of Bioinformatics; Bioinformatics Division and Center for Synthetic & Systems Biology, TNLIST; Department of Automation, Tsinghua University, Beijing 100084, China.
+
+
+## Session info
+
+```{r sessionInfo}
+sessionInfo()
+```
 
