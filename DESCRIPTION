@@ -1,7 +1,7 @@
 Package: DEsingle
 Type: Package
 Title: DEsingle for detecting three types of differential expression in single-cell RNA-seq data
-Version: 0.99.3
+Version: 0.99.4
 Date: 2017-06-06
 Author: Zhun Miao <miaoz13@mails.tsinghua.edu.cn>
 Maintainer: Zhun Miao <miaoz13@mails.tsinghua.edu.cn>
@@ -16,7 +16,7 @@ Description: DEsingle is an R package for differential expression (DE) analysis 
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
-Depends: R (>= 3.4.0)
+Depends: R (>= 3.5.0)
 Imports:
     stats,
     MASS (>= 7.3-45),
