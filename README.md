@@ -122,9 +122,11 @@ The output of `DEsingle` is a matrix containing the differential expression (DE)
 * `State`: State of DE genes, *up* represents up-regulated; *down* represents down-regulated.
 
 
-## Interpretation of results
+## Visualization and interpretation of results
 
-For the interpretation of results when `DEsingle` applied to real data, please refer to our [*manuscript*](https://www.biorxiv.org/content/early/2017/09/08/173997).
+Users could use the `heatmap()` function in `stats` or `heatmap.2` function in `gplots` to plot the heatmap of the DE genes DEsingle found, as we did in Figure 3 of our [*manuscript*](https://www.biorxiv.org/content/early/2017/09/08/173997).
+
+For the interpretation of results when `DEsingle` applied to real data, please refer to the *Three types of differentially expressed genes between E3 and E4 cells* part in our [*manuscript*](https://www.biorxiv.org/content/early/2017/09/08/173997).
 
 
 ## Help
