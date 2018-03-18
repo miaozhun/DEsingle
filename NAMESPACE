@@ -2,8 +2,8 @@
 
 export(DEsingle)
 export(DEtype)
-import(SingleCellExperiment)
 import(stats)
+import(SingleCellExperiment)
 importFrom(MASS,fitdistr)
 importFrom(MASS,glm.nb)
 importFrom(VGAM,dzinegbin)
