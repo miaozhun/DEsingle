@@ -1,19 +1,19 @@
 ---
 title: "DEsingle"
 author: "Zhun Miao"
-date: "2018-03-13"
+date: "2018-03-18"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{DEsingle}
+%\VignetteIndexEntry{DEsingle}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
----
-
-```{r setup, include = FALSE}
+  ---
+  
+  ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
-  echo = TRUE,
-  collapse = TRUE,
-  comment = "#>"
+echo = TRUE,
+collapse = TRUE,
+comment = "#>"
 )
 ```
 
@@ -85,7 +85,10 @@ The [`SingleCellExperiment`](https://bioconductor.org/packages/release/bioc/html
 ```{r demo2}
 # Load library and the test data for DEsingle
 library(DEsingle)
-if(!require("SingleCellExperiment")) biocLite("SingleCellExperiment")
+if(!require("SingleCellExperiment")){
+  source("https://bioconductor.org/biocLite.R")
+  biocLite("SingleCellExperiment")
+}
 data(TestData)
 
 # Convert the test data in DEsingle to SingleCellExperiment data representation
