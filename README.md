@@ -83,7 +83,10 @@ The [`SingleCellExperiment`](https://bioconductor.org/packages/release/bioc/html
 ```{r demo2}
 # Load library and the test data for DEsingle
 library(DEsingle)
-if(!require("SingleCellExperiment")) biocLite("SingleCellExperiment")
+if(!require("SingleCellExperiment")){
+  source("https://bioconductor.org/biocLite.R")
+  biocLite("SingleCellExperiment")
+}
 data(TestData)
 
 # Convert the test data in DEsingle to SingleCellExperiment data representation
