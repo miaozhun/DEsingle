@@ -7,12 +7,12 @@
 DEtype(results, threshold)
 }
 \arguments{
-\item{results}{A result matrix of DEsingle output, which contains the unclassified differential expression analysis results.}
+\item{results}{A output data frame from \code{DEsingle}, which contains the unclassified differential expression analysis results.}
 
 \item{threshold}{A number of (0,1) to specify the threshold of FDR.}
 }
 \value{
-A matrix containing the differential expression (DE) analysis results and DE gene types and states.
+A data frame containing the differential expression (DE) analysis results and DE gene types and states.
 \itemize{
   \item theta_1, theta_2, mu_1, mu_2, size_1, size_2, prob_1, prob_2: MLE of the zero-inflated negative binomial distribution's parameters of group 1 and group 2.
   \item total_mean_1, total_mean_2: Mean of read counts of group 1 and group 2.
@@ -27,12 +27,12 @@ A matrix containing the differential expression (DE) analysis results and DE gen
   \item pvalue: P value of hypothesis testing of H0 (Used to determine whether a gene is a DE gene).
   \item pvalue.adj.FDR: Adjusted P value of H0's pvalue using Benjamini & Hochberg's method (Used to determine whether a gene is a DE gene).
   \item Remark: Record of abnormal program information.
-  \item Type: Types of DE genes. DEs represents differential expression status; DEa represents differential expression abundance; DEg represents general differential expression.
+  \item Type: Types of DE genes. DEs represents different expression status; DEa represents differential expression abundance; DEg represents general differential expression.
   \item State: State of DE genes, up represents up-regulated; down represents down-regulated.
 }
 }
 \description{
-This function is used to classify the differentially expressed genes of single-cell RNA-seq (scRNA-seq) data found by DEsingle. It takes the output results matrix of DEsingle as input.
+This function is used to classify the differentially expressed genes of single-cell RNA-seq (scRNA-seq) data found by \code{DEsingle}. It takes the output data frame from \code{DEsingle} as input.
 }
 \examples{
 # Load test data for DEsingle
@@ -52,7 +52,7 @@ results.classified <- DEtype(results = results, threshold = 0.05)
 \seealso{
 \code{\link{DEsingle}}, for the detection of differentially expressed genes from scRNA-seq data.
 
-\code{\link{TestData}}, a test dataset for DEsinge.
+\code{\link{TestData}}, a test dataset for DEsingle.
 }
 \author{
 Zhun Miao.
