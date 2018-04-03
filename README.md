@@ -12,18 +12,27 @@
 
 `DEsingle` employs the Zero-Inflated Negative Binomial model for differential expression analysis. By estimating the proportion of real and dropout zeros, it not only detects DE genes at higher accuracy but also subdivides three types of differential expression with different regulatory and functional mechanisms.
 
-For more information, please refer to the [original manuscript](https://www.biorxiv.org/content/early/2017/09/08/173997) by *Zhun Miao and Xuegong Zhang*.
+For more information, please refer to the [original manuscript](https://www.biorxiv.org/content/early/2018/03/26/173997) by *Zhun Miao, Ke Deng, Xiaowo Wang and Xuegong Zhang*.
 
 
-## Install DEsingle
+## Installation
 
-To install `DEsingle` R package, just execute the following code in R console:
+To install `DEsingle` from Bioconductor:
+
+```{r Installation from Bioconductor, eval = FALSE}
+BiocInstaller::biocLite("DEsingle")
 ```
-# Install devtools if needed
-if(!require(devtools)) install.packages("devtools")
 
-# Install DEsingle
-install_github("miaozhun/DEsingle", build_vignettes = TRUE)
+To install the developmental version from GitHub:
+
+```{r Installation from GitHub, eval = FALSE}
+devtools::install_github("miaozhun/DEsingle", build_vignettes = TRUE)
+```
+
+To load the installed `DEsingle` in R:
+
+```{r Load DEsingle, eval = FALSE}
+library(DEsingle)
 ```
 
 
@@ -127,9 +136,9 @@ The output of `DEsingle` is a matrix containing the differential expression (DE)
 
 ## Visualization and interpretation of results
 
-Users could use the `heatmap()` function in `stats` or `heatmap.2` function in `gplots` to plot the heatmap of the DE genes DEsingle found, as we did in Figure 3 of our [*manuscript*](https://www.biorxiv.org/content/early/2017/09/08/173997).
+Users could use the `heatmap()` function in `stats` or `heatmap.2` function in `gplots` to plot the heatmap of the DE genes DEsingle found, as we did in Figure S3 of our [*manuscript*](https://www.biorxiv.org/content/early/2018/03/26/173997).
 
-For the interpretation of results when `DEsingle` applied to real data, please refer to the *Three types of differentially expressed genes between E3 and E4 cells* part in our [*manuscript*](https://www.biorxiv.org/content/early/2017/09/08/173997).
+For the interpretation of results when `DEsingle` applied to real data, please refer to the *Three types of DE genes between E3 and E4 of human embryonic cells* part in the [*Supplementary Materials*](https://www.biorxiv.org/content/biorxiv/suppl/2018/03/26/173997.DC4/173997-1.pdf) of our [*manuscript*](https://www.biorxiv.org/content/early/2018/03/26/173997).
 
 
 ## Help
