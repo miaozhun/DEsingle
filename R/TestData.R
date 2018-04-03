@@ -15,7 +15,7 @@
 #' @format
 #' \itemize{
 #'   \item counts. A non-negative integer matrix of scRNA-seq raw read counts, rows are genes and columns are cells.
-#'   \item group. A vector of factor specifying the two groups to be compared, corresponding to the column of the \code{counts}.
+#'   \item group. A vector of factor specifying the two groups to be compared, corresponding to the columns of the \code{counts}.
 #' }
 #' @source Petropoulos S, et al. Cell, 2016, 165(4): 1012-1026.
 #' @seealso
