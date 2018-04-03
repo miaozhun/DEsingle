@@ -7,12 +7,12 @@
 DEsingle(counts, group)
 }
 \arguments{
-\item{counts}{A non-negative integer matrix of scRNA-seq raw read counts, whose rows are genes and columns are samples/cells.}
+\item{counts}{A non-negative integer matrix of scRNA-seq raw read counts or a `SingleCellExperiment` object which contains the read counts matrix. The rows of the matrix are genes and columns are samples/cells.}
 
 \item{group}{A vector of factor which specifies the two groups to be compared, corresponding to the columns in the counts matrix.}
 }
 \value{
-A matrix containing the differential expression (DE) analysis results, rows are genes and columns contain the following items:
+A data frame containing the differential expression (DE) analysis results, rows are genes and columns contain the following items:
 \itemize{
   \item theta_1, theta_2, mu_1, mu_2, size_1, size_2, prob_1, prob_2: MLE of the zero-inflated negative binomial distribution's parameters of group 1 and group 2.
   \item total_mean_1, total_mean_2: Mean of read counts of group 1 and group 2.
@@ -30,7 +30,7 @@ A matrix containing the differential expression (DE) analysis results, rows are 
 }
 }
 \description{
-This function is used to detect differentially expressed genes between two specified groups of cells in a read counts matrix of single-cell RNA-seq (scRNA-seq) data. It takes a non-negative integer matrix of scRNA-seq raw read counts as input. So users should map the reads (obtained from sequencing libraries of the samples) to the corresponding genome and count the reads mapped to each gene according to the gene annotation to get the raw read counts matrix in advance.
+This function is used to detect differentially expressed genes between two specified groups of cells in a raw read counts matrix of single-cell RNA-seq (scRNA-seq) data. It takes a non-negative integer matrix of scRNA-seq raw read counts or a `SingleCellExperiment` object as input. So users should map the reads (obtained from sequencing libraries of the samples) to the corresponding genome and count the reads mapped to each gene according to the gene annotation to get the raw read counts matrix in advance.
 }
 \examples{
 # Load test data for DEsingle
@@ -50,7 +50,7 @@ results.classified <- DEtype(results = results, threshold = 0.05)
 \seealso{
 \code{\link{DEtype}}, for the classification of differentially expressed genes found by \code{\link{DEsingle}}.
 
-\code{\link{TestData}}, a test dataset for DEsinge.
+\code{\link{TestData}}, a test dataset for DEsingle.
 }
 \author{
 Zhun Miao.
