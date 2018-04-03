@@ -1,8 +1,13 @@
 ---
 title: "DEsingle"
 author: "Zhun Miao"
-date: "2018-04-03"
-output: rmarkdown::html_vignette
+date: "2018-04-04"
+output: 
+  html_document:
+    toc: TRUE
+    toc_depth: 3
+    toc_float: TRUE
+    collapsed: TRUE
 vignette: >
   %\VignetteIndexEntry{DEsingle}
   %\VignetteEngine{knitr::rmarkdown}
@@ -52,18 +57,23 @@ library(DEsingle)
 
 ## Input
 
-The input `counts` is a scRNA-seq **raw read counts matrix** of non-negative integer, whose rows are genes and columns are cells.
+`DEsingle` takes two inputs: `counts` and `group`.
+
+The input `counts` is a scRNA-seq **raw read counts matrix** or a `SingleCellExperiment` object which contains the read counts matrix. The rows of the matrix are genes and columns are samples/cells.
 
 The other input `group` is a vector of factor which specifies the two groups in the matrix to be compared, corresponding to the columns in `counts`.
 
+
+## Test data
+
 Users can load the test data in `DEsingle` by
 
-```{r load TestData}
+```{r Load TestData}
 library(DEsingle)
 data(TestData)
 ```
 
-The object `counts` in `TestData` is a toy data which has 200 genes (rows) and 150 cells (columns).
+The toy data `counts` in `TestData` is a scRNA-seq read counts matrix which has 200 genes (rows) and 150 cells (columns).
 
 ```{r counts}
 dim(counts)
@@ -80,7 +90,9 @@ summary(group)
 
 ## Usage
 
-Here is an example to run `DEsingle` on the test data:
+### With read counts matrix input
+
+Here is an example to run `DEsingle` with read counts matrix input:
 
 ```{r demo, eval = FALSE}
 # Load library and the test data for DEsingle
@@ -98,12 +110,13 @@ results <- DEsingle(counts = counts, group = group)
 results.classified <- DEtype(results = results, threshold = 0.05)
 ```
 
+### With SingleCellExperiment input
 
-## Cooperation with the SingleCellExperiment class
+The [`SingleCellExperiment`](https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html) class is a widely used S4 class for storing single-cell genomics data. `DEsingle` also could take the `SingleCellExperiment` data representation as input.
 
-The [`SingleCellExperiment`](https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html) class is a widely used S4 class for storing single-cell genomics data. `DEsingle` also could take the `SingleCellExperiment` data representation as input. Here is an example.
+Here is an example to run `DEsingle` with SingleCellExperiment input:
 
-```{r demo2}
+```{r demo2, eval = FALSE}
 # Load library and the test data for DEsingle
 library(DEsingle)
 if(!require("SingleCellExperiment")){
@@ -148,9 +161,12 @@ The output of `DEsingle` is a matrix containing the differential expression (DE)
 * `State`: State of DE genes, *up* represents up-regulated; *down* represents down-regulated.
 
 
-## Visualization and interpretation of results
+## Visualization of results
 
-Users could use the `heatmap()` function in `stats` or `heatmap.2` function in `gplots` to plot the heatmap of the DE genes DEsingle found, as we did in Figure S3 of our [*manuscript*](https://www.biorxiv.org/content/early/2018/03/26/173997).
+Users could use the `heatmap()` function in `stats` or `heatmap.2` function in `gplots` to plot the heatmap of the DE genes DEsingle found, as we did in Figure S3 of the [*manuscript*](https://www.biorxiv.org/content/early/2018/03/26/173997).
+
+
+## Interpretation of results
 
 For the interpretation of results when `DEsingle` applied to real data, please refer to the *Three types of DE genes between E3 and E4 of human embryonic cells* part in the [*Supplementary Materials*](https://www.biorxiv.org/content/biorxiv/suppl/2018/03/26/173997.DC4/173997-1.pdf) of our [*manuscript*](https://www.biorxiv.org/content/early/2018/03/26/173997).
 
