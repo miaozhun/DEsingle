@@ -45,6 +45,7 @@
 #' results.classified <- DEtype(results = results, threshold = 0.05)
 #'
 #' @import stats
+#' @import BiocParallel
 #' @import SingleCellExperiment
 #' @importFrom MASS glm.nb fitdistr
 #' @importFrom VGAM dzinegbin
