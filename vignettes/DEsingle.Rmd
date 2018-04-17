@@ -1,7 +1,7 @@
 ---
 title: "DEsingle"
 author: "Zhun Miao"
-date: "2018-04-04"
+date: "2018-04-17"
 output: 
   html_document:
     toc: TRUE
@@ -112,7 +112,7 @@ results.classified <- DEtype(results = results, threshold = 0.05)
 
 ### With SingleCellExperiment input
 
-The [`SingleCellExperiment`](https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html) class is a widely used S4 class for storing single-cell genomics data. `DEsingle` also could take the `SingleCellExperiment` data representation as input.
+The [`SingleCellExperiment`](http://bioconductor.org/packages/SingleCellExperiment/) class is a widely used S4 class for storing single-cell genomics data. `DEsingle` also could take the `SingleCellExperiment` data representation as input.
 
 Here is an example to run `DEsingle` with SingleCellExperiment input:
 
@@ -159,6 +159,21 @@ The output of `DEsingle` is a matrix containing the differential expression (DE)
 * `Remark`: Record of abnormal program information.
 * `Type`: Types of DE genes. *DEs* represents differential expression status; *DEa* represents differential expression abundance; *DEg* represents general differential expression.
 * `State`: State of DE genes, *up* represents up-regulated; *down* represents down-regulated.
+
+
+## Parallelization
+
+`DEsingle` integrates parallel computing function with [`BiocParallel`](http://bioconductor.org/packages/BiocParallel/). Users could just set `parallel = TRUE` in `DEsingle` to enable parallelization.
+
+```{r demo3, eval = FALSE}
+# Load library
+library(DEsingle)
+
+# Detecting the differentially expressed genes in parallelization
+results <- DEsingle(counts = counts, group = group, parallel = TRUE)
+```
+
+Advanced users could use the `BPPARAM` parameter to specify the parallel back-end to be used and its configuration parameters. See the [*Reference Manual*](https://bioconductor.org/packages/release/bioc/manuals/BiocParallel/man/BiocParallel.pdf) of [`BiocParallel`](http://bioconductor.org/packages/BiocParallel/) for details.
 
 
 ## Visualization of results
