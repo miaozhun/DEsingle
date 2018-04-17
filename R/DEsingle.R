@@ -4,6 +4,8 @@
 #'
 #' @param counts A non-negative integer matrix of scRNA-seq raw read counts or a \code{SingleCellExperiment} object which contains the read counts matrix. The rows of the matrix are genes and columns are samples/cells.
 #' @param group A vector of factor which specifies the two groups to be compared, corresponding to the columns in the counts matrix.
+#' @param parallel If FALSE (default), no parallel computation is used; if TRUE, parallel computation using \code{BiocParallel}, with argument \code{BPPARAM}.
+#' @param BPPARAM An optional parameter object passed internally to \code{\link{bplapply}} when \code{parallel=TRUE}. If not specified, \code{\link{bpparam}()} (default) will be used.
 #' @return
 #' A data frame containing the differential expression (DE) analysis results, rows are genes and columns contain the following items:
 #' \itemize{
@@ -43,6 +45,7 @@
 #' results.classified <- DEtype(results = results, threshold = 0.05)
 #'
 #' @import stats
+#' @import BiocParallel
 #' @import SingleCellExperiment
 #' @importFrom MASS glm.nb fitdistr
 #' @importFrom VGAM dzinegbin
@@ -108,8 +111,10 @@ DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
   # Function of testing homogeneity of two ZINB populations
   CallDE <- function(i){
 
+    # Function output variable
     results_gene <- data.frame(row.names = row.names(counts_norm)[i], theta_1 = NA, theta_2 = NA, mu_1 = NA, mu_2 = NA, size_1 = NA, size_2 = NA, prob_1 = NA, prob_2 = NA, total_mean_1 = NA, total_mean_2 = NA, foldChange = NA, norm_total_mean_1 = NA, norm_total_mean_2 = NA, norm_foldChange = NA, chi2LR1 = NA, pvalue_LR2 = NA, pvalue_LR3 = NA, FDR_LR2 = NA, FDR_LR3 = NA, pvalue = NA, pvalue.adj.FDR = NA, Remark = NA)
 
+    # Function main input data
     counts_1 <- counts_norm[i, group == levels(group)[1]]
     counts_2 <- counts_norm[i, group == levels(group)[2]]
 
@@ -601,6 +606,7 @@ DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
   }
 
 
+  # Format output results
   results[,"FDR_LR2"] <- p.adjust(results[,"pvalue_LR2"], method="fdr")
   results[,"FDR_LR3"] <- p.adjust(results[,"pvalue_LR3"], method="fdr")
   results[,"pvalue.adj.FDR"] <- p.adjust(results[,"pvalue"], method="fdr")
