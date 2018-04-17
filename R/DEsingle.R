@@ -54,7 +54,7 @@
 
 
 
-DEsingle <- function(counts, group){
+DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
 
   # Handle for SingleCellExperiment
   if(class(counts)[1] == "SingleCellExperiment")
@@ -71,7 +71,7 @@ DEsingle <- function(counts, group){
   if(any(colSums(counts) == 0))
     warning("Library size of zero detected in 'counts' matrix")
 
-  if(!class(group) == "factor")
+  if(class(group) != "factor")
     stop("Wrong data type of 'group'")
   if(length(levels(group)) != 2)
     stop("Wrong number of levels in 'group'")
@@ -104,121 +104,129 @@ DEsingle <- function(counts, group){
   }
   counts_norm <- ceiling(counts_norm)
 
-  # Log likelihood functions
-  logL <- function(counts_1, theta_1, size_1, prob_1, counts_2, theta_2, size_2, prob_2){
-    logL_1 <- sum(dzinegbin(counts_1, size = size_1, prob = prob_1, pstr0 = theta_1, log = TRUE))
-    logL_2 <- sum(dzinegbin(counts_2, size = size_2, prob = prob_2, pstr0 = theta_2, log = TRUE))
-    logL <- logL_1 + logL_2
-    logL
-  }
-  logL2 <- function(param){
-    theta_resL2 <- param[1]
-    size_1_resL2 <- param[2]
-    prob_1_resL2 <- param[3]
-    size_2_resL2 <- param[4]
-    prob_2_resL2 <- param[5]
-    logL_1 <- sum(dzinegbin(counts_1, size = size_1_resL2, prob = prob_1_resL2, pstr0 = theta_resL2, log = TRUE))
-    logL_2 <- sum(dzinegbin(counts_2, size = size_2_resL2, prob = prob_2_resL2, pstr0 = theta_resL2, log = TRUE))
-    logL <- logL_1 + logL_2
-    logL
-  }
-  logL2NZ <- function(param){
-    theta_resL2 <- 0
-    size_1_resL2 <- param[1]
-    prob_1_resL2 <- param[2]
-    size_2_resL2 <- param[3]
-    prob_2_resL2 <- param[4]
-    logL_1 <- sum(dzinegbin(counts_1, size = size_1_resL2, prob = prob_1_resL2, pstr0 = theta_resL2, log = TRUE))
-    logL_2 <- sum(dzinegbin(counts_2, size = size_2_resL2, prob = prob_2_resL2, pstr0 = theta_resL2, log = TRUE))
-    logL <- logL_1 + logL_2
-    logL
-  }
-  logL3 <- function(param){
-    theta_1_resL3 <- param[1]
-    size_resL3 <- param[2]
-    prob_resL3 <- param[3]
-    theta_2_resL3 <- param[4]
-    logL_1 <- sum(dzinegbin(counts_1, size = size_resL3, prob = prob_resL3, pstr0 = theta_1_resL3, log = TRUE))
-    logL_2 <- sum(dzinegbin(counts_2, size = size_resL3, prob = prob_resL3, pstr0 = theta_2_resL3, log = TRUE))
-    logL <- logL_1 + logL_2
-    logL
-  }
-  logL3NZ1 <- function(param){
-    theta_1_resL3 <- 0
-    size_resL3 <- param[1]
-    prob_resL3 <- param[2]
-    theta_2_resL3 <- param[3]
-    logL_1 <- sum(dzinegbin(counts_1, size = size_resL3, prob = prob_resL3, pstr0 = theta_1_resL3, log = TRUE))
-    logL_2 <- sum(dzinegbin(counts_2, size = size_resL3, prob = prob_resL3, pstr0 = theta_2_resL3, log = TRUE))
-    logL <- logL_1 + logL_2
-    logL
-  }
-  logL3NZ2 <- function(param){
-    theta_1_resL3 <- param[1]
-    size_resL3 <- param[2]
-    prob_resL3 <- param[3]
-    theta_2_resL3 <- 0
-    logL_1 <- sum(dzinegbin(counts_1, size = size_resL3, prob = prob_resL3, pstr0 = theta_1_resL3, log = TRUE))
-    logL_2 <- sum(dzinegbin(counts_2, size = size_resL3, prob = prob_resL3, pstr0 = theta_2_resL3, log = TRUE))
-    logL <- logL_1 + logL_2
-    logL
-  }
-  logL3AZ1 <- function(param){
-    theta_1_resL3 <- 1
-    size_resL3 <- param[1]
-    prob_resL3 <- param[2]
-    theta_2_resL3 <- param[3]
-    logL_1 <- sum(dzinegbin(counts_1, size = size_resL3, prob = prob_resL3, pstr0 = theta_1_resL3, log = TRUE))
-    logL_2 <- sum(dzinegbin(counts_2, size = size_resL3, prob = prob_resL3, pstr0 = theta_2_resL3, log = TRUE))
-    logL <- logL_1 + logL_2
-    logL
-  }
-  logL3AZ2 <- function(param){
-    theta_1_resL3 <- param[1]
-    size_resL3 <- param[2]
-    prob_resL3 <- param[3]
-    theta_2_resL3 <- 1
-    logL_1 <- sum(dzinegbin(counts_1, size = size_resL3, prob = prob_resL3, pstr0 = theta_1_resL3, log = TRUE))
-    logL_2 <- sum(dzinegbin(counts_2, size = size_resL3, prob = prob_resL3, pstr0 = theta_2_resL3, log = TRUE))
-    logL <- logL_1 + logL_2
-    logL
-  }
-  logL3NZ1AZ2 <- function(param){
-    theta_1_resL3 <- 0
-    size_resL3 <- param[1]
-    prob_resL3 <- param[2]
-    theta_2_resL3 <- 1
-    logL_1 <- sum(dzinegbin(counts_1, size = size_resL3, prob = prob_resL3, pstr0 = theta_1_resL3, log = TRUE))
-    logL_2 <- sum(dzinegbin(counts_2, size = size_resL3, prob = prob_resL3, pstr0 = theta_2_resL3, log = TRUE))
-    logL <- logL_1 + logL_2
-    logL
-  }
-  logL3NZ2AZ1 <- function(param){
-    theta_1_resL3 <- 1
-    size_resL3 <- param[1]
-    prob_resL3 <- param[2]
-    theta_2_resL3 <- 0
-    logL_1 <- sum(dzinegbin(counts_1, size = size_resL3, prob = prob_resL3, pstr0 = theta_1_resL3, log = TRUE))
-    logL_2 <- sum(dzinegbin(counts_2, size = size_resL3, prob = prob_resL3, pstr0 = theta_2_resL3, log = TRUE))
-    logL <- logL_1 + logL_2
-    logL
-  }
-  judgeParam <- function(param){
-    if((param >= 0) & (param <= 1))
-      res <- TRUE
-    else
-      res <- FALSE
-    res
-  }
 
-  # Testing homogeneity of two ZINB populations gene by gene
-  results <- matrix(data=NA, nrow = geneNum_NAZ, ncol = 22, dimnames = list(row.names(counts_norm), c("theta_1", "theta_2", "mu_1", "mu_2", "size_1", "size_2", "prob_1", "prob_2", "total_mean_1", "total_mean_2", "foldChange", "norm_total_mean_1", "norm_total_mean_2", "norm_foldChange", "chi2LR1", "pvalue_LR2", "pvalue_LR3", "FDR_LR2", "FDR_LR3", "pvalue", "pvalue.adj.FDR", "Remark")))
-  for(i in 1:geneNum_NAZ)
-  {
-    cat("\r",paste0("DEsingle is analyzing ", i," of ",geneNum_NAZ," expressed genes"))
+  # Function of testing homogeneity of two ZINB populations
+  CallDE <- function(i){
+    suppressPackageStartupMessages({
+      library(pscl)
+      library(gamlss)
+      library(VGAM)
+      library(MASS)
+      library(bbmle)
+      library(maxLik)
+    })
+
+    results_gene <- data.frame(row.names = row.names(counts_norm)[i], theta_1 = NA, theta_2 = NA, mu_1 = NA, mu_2 = NA, size_1 = NA, size_2 = NA, prob_1 = NA, prob_2 = NA, total_mean_1 = NA, total_mean_2 = NA, foldChange = NA, norm_total_mean_1 = NA, norm_total_mean_2 = NA, norm_foldChange = NA, chi2LR1 = NA, pvalue_LR2 = NA, pvalue_LR3 = NA, FDR_LR2 = NA, FDR_LR3 = NA, pvalue = NA, pvalue.adj.FDR = NA, Remark = NA)
 
     counts_1 <- counts_norm[i, group == levels(group)[1]]
     counts_2 <- counts_norm[i, group == levels(group)[2]]
+
+    # Log likelihood functions
+    logL <- function(counts_1, theta_1, size_1, prob_1, counts_2, theta_2, size_2, prob_2){
+      logL_1 <- sum(dzinegbin(counts_1, size = size_1, prob = prob_1, pstr0 = theta_1, log = TRUE))
+      logL_2 <- sum(dzinegbin(counts_2, size = size_2, prob = prob_2, pstr0 = theta_2, log = TRUE))
+      logL <- logL_1 + logL_2
+      logL
+    }
+    logL2 <- function(param){
+      theta_resL2 <- param[1]
+      size_1_resL2 <- param[2]
+      prob_1_resL2 <- param[3]
+      size_2_resL2 <- param[4]
+      prob_2_resL2 <- param[5]
+      logL_1 <- sum(dzinegbin(counts_1, size = size_1_resL2, prob = prob_1_resL2, pstr0 = theta_resL2, log = TRUE))
+      logL_2 <- sum(dzinegbin(counts_2, size = size_2_resL2, prob = prob_2_resL2, pstr0 = theta_resL2, log = TRUE))
+      logL <- logL_1 + logL_2
+      logL
+    }
+    logL2NZ <- function(param){
+      theta_resL2 <- 0
+      size_1_resL2 <- param[1]
+      prob_1_resL2 <- param[2]
+      size_2_resL2 <- param[3]
+      prob_2_resL2 <- param[4]
+      logL_1 <- sum(dzinegbin(counts_1, size = size_1_resL2, prob = prob_1_resL2, pstr0 = theta_resL2, log = TRUE))
+      logL_2 <- sum(dzinegbin(counts_2, size = size_2_resL2, prob = prob_2_resL2, pstr0 = theta_resL2, log = TRUE))
+      logL <- logL_1 + logL_2
+      logL
+    }
+    logL3 <- function(param){
+      theta_1_resL3 <- param[1]
+      size_resL3 <- param[2]
+      prob_resL3 <- param[3]
+      theta_2_resL3 <- param[4]
+      logL_1 <- sum(dzinegbin(counts_1, size = size_resL3, prob = prob_resL3, pstr0 = theta_1_resL3, log = TRUE))
+      logL_2 <- sum(dzinegbin(counts_2, size = size_resL3, prob = prob_resL3, pstr0 = theta_2_resL3, log = TRUE))
+      logL <- logL_1 + logL_2
+      logL
+    }
+    logL3NZ1 <- function(param){
+      theta_1_resL3 <- 0
+      size_resL3 <- param[1]
+      prob_resL3 <- param[2]
+      theta_2_resL3 <- param[3]
+      logL_1 <- sum(dzinegbin(counts_1, size = size_resL3, prob = prob_resL3, pstr0 = theta_1_resL3, log = TRUE))
+      logL_2 <- sum(dzinegbin(counts_2, size = size_resL3, prob = prob_resL3, pstr0 = theta_2_resL3, log = TRUE))
+      logL <- logL_1 + logL_2
+      logL
+    }
+    logL3NZ2 <- function(param){
+      theta_1_resL3 <- param[1]
+      size_resL3 <- param[2]
+      prob_resL3 <- param[3]
+      theta_2_resL3 <- 0
+      logL_1 <- sum(dzinegbin(counts_1, size = size_resL3, prob = prob_resL3, pstr0 = theta_1_resL3, log = TRUE))
+      logL_2 <- sum(dzinegbin(counts_2, size = size_resL3, prob = prob_resL3, pstr0 = theta_2_resL3, log = TRUE))
+      logL <- logL_1 + logL_2
+      logL
+    }
+    logL3AZ1 <- function(param){
+      theta_1_resL3 <- 1
+      size_resL3 <- param[1]
+      prob_resL3 <- param[2]
+      theta_2_resL3 <- param[3]
+      logL_1 <- sum(dzinegbin(counts_1, size = size_resL3, prob = prob_resL3, pstr0 = theta_1_resL3, log = TRUE))
+      logL_2 <- sum(dzinegbin(counts_2, size = size_resL3, prob = prob_resL3, pstr0 = theta_2_resL3, log = TRUE))
+      logL <- logL_1 + logL_2
+      logL
+    }
+    logL3AZ2 <- function(param){
+      theta_1_resL3 <- param[1]
+      size_resL3 <- param[2]
+      prob_resL3 <- param[3]
+      theta_2_resL3 <- 1
+      logL_1 <- sum(dzinegbin(counts_1, size = size_resL3, prob = prob_resL3, pstr0 = theta_1_resL3, log = TRUE))
+      logL_2 <- sum(dzinegbin(counts_2, size = size_resL3, prob = prob_resL3, pstr0 = theta_2_resL3, log = TRUE))
+      logL <- logL_1 + logL_2
+      logL
+    }
+    logL3NZ1AZ2 <- function(param){
+      theta_1_resL3 <- 0
+      size_resL3 <- param[1]
+      prob_resL3 <- param[2]
+      theta_2_resL3 <- 1
+      logL_1 <- sum(dzinegbin(counts_1, size = size_resL3, prob = prob_resL3, pstr0 = theta_1_resL3, log = TRUE))
+      logL_2 <- sum(dzinegbin(counts_2, size = size_resL3, prob = prob_resL3, pstr0 = theta_2_resL3, log = TRUE))
+      logL <- logL_1 + logL_2
+      logL
+    }
+    logL3NZ2AZ1 <- function(param){
+      theta_1_resL3 <- 1
+      size_resL3 <- param[1]
+      prob_resL3 <- param[2]
+      theta_2_resL3 <- 0
+      logL_1 <- sum(dzinegbin(counts_1, size = size_resL3, prob = prob_resL3, pstr0 = theta_1_resL3, log = TRUE))
+      logL_2 <- sum(dzinegbin(counts_2, size = size_resL3, prob = prob_resL3, pstr0 = theta_2_resL3, log = TRUE))
+      logL <- logL_1 + logL_2
+      logL
+    }
+    judgeParam <- function(param){
+      if((param >= 0) & (param <= 1))
+        res <- TRUE
+      else
+        res <- FALSE
+      res
+    }
 
     # MLE of parameters of ZINB counts_1
     if(sum(counts_1 == 0) > 0){
@@ -235,7 +243,7 @@ DEsingle <- function(counts, group){
           zinb_try_twice <- try(zeroinfl(formula = counts_1 ~ 1 | 1, dist = "negbin"), silent=TRUE)
           if('try-error' %in% class(zinb_try_twice)){
             print("MLE of ZINB failed!");
-            results[i,"Remark"] <- "ZINB failed!"
+            results_gene[1,"Remark"] <- "ZINB failed!"
             next;
           }else{
             zinb_1 <- zinb_try_twice
@@ -264,7 +272,7 @@ DEsingle <- function(counts, group){
             nb_try_fourth <- try(glm.nb(formula = counts_1 ~ 1), silent=TRUE)
             if('try-error' %in% class(nb_try_fourth)){
               print("MLE of NB failed!");
-              results[i,"Remark"] <- "NB failed!"
+              results_gene[1,"Remark"] <- "NB failed!"
               next;
             }else{
               nb_1 <- nb_try_fourth
@@ -311,7 +319,7 @@ DEsingle <- function(counts, group){
           zinb_try_twice <- try(zeroinfl(formula = counts_2 ~ 1 | 1, dist = "negbin"), silent=TRUE)
           if('try-error' %in% class(zinb_try_twice)){
             print("MLE of ZINB failed!");
-            results[i,"Remark"] <- "ZINB failed!"
+            results_gene[1,"Remark"] <- "ZINB failed!"
             next;
           }else{
             zinb_2 <- zinb_try_twice
@@ -340,7 +348,7 @@ DEsingle <- function(counts, group){
             nb_try_fourth <- try(glm.nb(formula = counts_2 ~ 1), silent=TRUE)
             if('try-error' %in% class(nb_try_fourth)){
               print("MLE of NB failed!");
-              results[i,"Remark"] <- "NB failed!"
+              results_gene[1,"Remark"] <- "NB failed!"
               next;
             }else{
               nb_2 <- nb_try_fourth
@@ -381,7 +389,7 @@ DEsingle <- function(counts, group){
         zinb_try_twice <- try(zeroinfl(formula = c(counts_1, counts_2) ~ 1 | 1, dist = "negbin"), silent=TRUE)
         if('try-error' %in% class(zinb_try_twice)){
           print("MLE of ZINB failed!");
-          results[i,"Remark"] <- "ZINB failed!"
+          results_gene[1,"Remark"] <- "ZINB failed!"
           next;
         }else{
           zinb_res <- zinb_try_twice
@@ -507,7 +515,7 @@ DEsingle <- function(counts, group){
             nb_try_fourth <- try(glm.nb(formula = c(counts_1, counts_2) ~ 1), silent=TRUE)
             if('try-error' %in% class(nb_try_fourth)){
               print("MLE of NB failed!");
-              results[i,"Remark"] <- "NB failed!"
+              results_gene[1,"Remark"] <- "NB failed!"
               next;
             }else{
               nb_res <- nb_try_fourth
@@ -554,9 +562,9 @@ DEsingle <- function(counts, group){
 
     # Judge parameters
     if(!(judgeParam(theta_resL2) & judgeParam(prob_1_resL2) & judgeParam(prob_2_resL2)))
-      results[i,"Remark"] <- "logL2 failed!"
+      results_gene[1,"Remark"] <- "logL2 failed!"
     if(!(judgeParam(theta_1_resL3) & judgeParam(theta_2_resL3) & judgeParam(prob_resL3)))
-      results[i,"Remark"] <- "logL3 failed!"
+      results_gene[1,"Remark"] <- "logL3 failed!"
 
     # LRT test
     chi2LR1 <- 2 *(logL(counts_1, theta_1, size_1, prob_1, counts_2, theta_2, size_2, prob_2) - logL(counts_1, theta_res, size_res, prob_res, counts_2, theta_res, size_res, prob_res))
@@ -566,35 +574,46 @@ DEsingle <- function(counts, group){
     chi2LR3 <- 2 *(logL(counts_1, theta_1, size_1, prob_1, counts_2, theta_2, size_2, prob_2) - logL(counts_1, theta_1_resL3, size_resL3, prob_resL3, counts_2, theta_2_resL3, size_resL3, prob_resL3))
     pvalue_LR3 <- 1 - pchisq(chi2LR3, df = 2)
 
-
     # Format output
-    results[i,"theta_1"] <- theta_1
-    results[i,"theta_2"] <- theta_2
-    results[i,"mu_1"] <- mu_1
-    results[i,"mu_2"] <- mu_2
-    results[i,"size_1"] <- size_1
-    results[i,"size_2"] <- size_2
-    results[i,"prob_1"] <- prob_1
-    results[i,"prob_2"] <- prob_2
-    results[i,"total_mean_1"] <- mean(counts_NAZ[i, group == levels(group)[1]])
-    results[i,"total_mean_2"] <- mean(counts_NAZ[i, group == levels(group)[2]])
-    results[i,"foldChange"] <- results[i,"total_mean_1"] / results[i,"total_mean_2"]
-    results[i,"norm_total_mean_1"] <- mean(counts_1)
-    results[i,"norm_total_mean_2"] <- mean(counts_2)
-    results[i,"norm_foldChange"] <- results[i,"norm_total_mean_1"] / results[i,"norm_total_mean_2"]
-    results[i,"chi2LR1"] <- chi2LR1
-    results[i,"pvalue"] <- pvalue
-    results[i,"pvalue_LR2"] <- pvalue_LR2
-    results[i,"pvalue_LR3"] <- pvalue_LR3
+    results_gene[1,"theta_1"] <- theta_1
+    results_gene[1,"theta_2"] <- theta_2
+    results_gene[1,"mu_1"] <- mu_1
+    results_gene[1,"mu_2"] <- mu_2
+    results_gene[1,"size_1"] <- size_1
+    results_gene[1,"size_2"] <- size_2
+    results_gene[1,"prob_1"] <- prob_1
+    results_gene[1,"prob_2"] <- prob_2
+    results_gene[1,"total_mean_1"] <- mean(counts_NAZ[i, group == levels(group)[1]])
+    results_gene[1,"total_mean_2"] <- mean(counts_NAZ[i, group == levels(group)[2]])
+    results_gene[1,"foldChange"] <- results_gene[1,"total_mean_1"] / results_gene[1,"total_mean_2"]
+    results_gene[1,"norm_total_mean_1"] <- mean(counts_1)
+    results_gene[1,"norm_total_mean_2"] <- mean(counts_2)
+    results_gene[1,"norm_foldChange"] <- results_gene[1,"norm_total_mean_1"] / results_gene[1,"norm_total_mean_2"]
+    results_gene[1,"chi2LR1"] <- chi2LR1
+    results_gene[1,"pvalue"] <- pvalue
+    results_gene[1,"pvalue_LR2"] <- pvalue_LR2
+    results_gene[1,"pvalue_LR3"] <- pvalue_LR3
+    results_gene
   }
+
+
+  # Call DE gene gene by gene
+  results <- NULL
+  if(!parallel){
+    for(i in 1:geneNum_NAZ){
+      cat("\r",paste0("DEsingle is analyzing ", i," of ",geneNum_NAZ," expressed genes"))
+      results <- rbind(results, CallDE(i))
+    }
+  }else{
+    results <- do.call(rbind, bplapply(1:geneNum_NAZ, CallDE, BPPARAM = BPPARAM))
+  }
+
 
   results[,"FDR_LR2"] <- p.adjust(results[,"pvalue_LR2"], method="fdr")
   results[,"FDR_LR3"] <- p.adjust(results[,"pvalue_LR3"], method="fdr")
   results[,"pvalue.adj.FDR"] <- p.adjust(results[,"pvalue"], method="fdr")
   results <- results[order(results[,"chi2LR1"], decreasing = TRUE),]
-  remove(lastFuncGrad, lastFuncParam, envir=.GlobalEnv)
   cat(paste0("\n\n ",sum(!is.na(results[,"Remark"])), " gene failed.\n\n"))
-  results <- as.data.frame(results)
   results
 
 }
