@@ -4,12 +4,16 @@
 \alias{DEsingle}
 \title{DEsingle: Detecting differentially expressed genes from scRNA-seq data}
 \usage{
-DEsingle(counts, group)
+DEsingle(counts, group, parallel = FALSE, BPPARAM = bpparam())
 }
 \arguments{
 \item{counts}{A non-negative integer matrix of scRNA-seq raw read counts or a \code{SingleCellExperiment} object which contains the read counts matrix. The rows of the matrix are genes and columns are samples/cells.}
 
 \item{group}{A vector of factor which specifies the two groups to be compared, corresponding to the columns in the counts matrix.}
+
+\item{parallel}{If FALSE (default), no parallel computation is used; if TRUE, parallel computation using \code{BiocParallel}, with argument \code{BPPARAM}.}
+
+\item{BPPARAM}{An optional parameter object passed internally to \code{\link{bplapply}} when \code{parallel=TRUE}. If not specified, \code{\link{bpparam}()} (default) will be used.}
 }
 \value{
 A data frame containing the differential expression (DE) analysis results, rows are genes and columns contain the following items:
