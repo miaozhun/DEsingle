@@ -19,7 +19,7 @@ LazyData: true
 Depends: R (>= 3.4.0)
 Imports:
     stats,
-	BiocParallel,
+    BiocParallel,
     MASS (>= 7.3-45),
     VGAM (>= 1.0-2),
     bbmle (>= 1.0.18),
