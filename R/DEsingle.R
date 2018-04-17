@@ -107,14 +107,6 @@ DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
 
   # Function of testing homogeneity of two ZINB populations
   CallDE <- function(i){
-    suppressPackageStartupMessages({
-      library(pscl)
-      library(gamlss)
-      library(VGAM)
-      library(MASS)
-      library(bbmle)
-      library(maxLik)
-    })
 
     results_gene <- data.frame(row.names = row.names(counts_norm)[i], theta_1 = NA, theta_2 = NA, mu_1 = NA, mu_2 = NA, size_1 = NA, size_2 = NA, prob_1 = NA, prob_2 = NA, total_mean_1 = NA, total_mean_2 = NA, foldChange = NA, norm_total_mean_1 = NA, norm_total_mean_2 = NA, norm_foldChange = NA, chi2LR1 = NA, pvalue_LR2 = NA, pvalue_LR3 = NA, FDR_LR2 = NA, FDR_LR3 = NA, pvalue = NA, pvalue.adj.FDR = NA, Remark = NA)
 
@@ -597,7 +589,7 @@ DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
   }
 
 
-  # Call DE gene gene by gene
+  # Call DEG gene by gene
   results <- NULL
   if(!parallel){
     for(i in 1:geneNum_NAZ){
@@ -613,8 +605,11 @@ DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
   results[,"FDR_LR3"] <- p.adjust(results[,"pvalue_LR3"], method="fdr")
   results[,"pvalue.adj.FDR"] <- p.adjust(results[,"pvalue"], method="fdr")
   results <- results[order(results[,"chi2LR1"], decreasing = TRUE),]
+  if(exists("lastFuncGrad") & exists("lastFuncParam"))
+    remove(lastFuncGrad, lastFuncParam, envir=.GlobalEnv)
   cat(paste0("\n\n ",sum(!is.na(results[,"Remark"])), " gene failed.\n\n"))
   results
+
 
 }
 
