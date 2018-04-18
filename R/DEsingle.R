@@ -610,6 +610,7 @@ DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
     results <- do.call(rbind, bplapply(1:geneNum_NAZ, CallDE, BPPARAM = BPPARAM))
   }
 
+
   # Format output results
   results[,"FDR_LR2"] <- p.adjust(results[,"pvalue_LR2"], method="fdr")
   results[,"FDR_LR3"] <- p.adjust(results[,"pvalue_LR3"], method="fdr")
@@ -619,7 +620,6 @@ DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
     remove(lastFuncGrad, lastFuncParam, envir=.GlobalEnv)
   cat(paste0("\n\n ",sum(!is.na(results[,"Remark"])), " gene failed.\n\n"))
   results
-
 
 
 }
