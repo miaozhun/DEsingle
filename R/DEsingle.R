@@ -63,34 +63,41 @@ DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
   if(class(counts)[1] == "SingleCellExperiment")
     counts <- counts(counts)
 
-  # Invalid input judge
-  counts <- as.matrix(counts)
+  # Invalid input control
+  if(!is.matrix(counts) & !is.data.frame(counts))
+    stop("Wrong data type of 'counts'")
   if(sum(is.na(counts)) > 0)
-    stop("NA detected in 'counts' matrix")
+    stop("NA detected in 'counts'")
   if(sum(counts < 0) > 0)
-    stop("Negative value detected in 'counts' matrix")
+    stop("Negative value detected in 'counts'")
   if(all(counts == 0))
-    stop("All elements of 'counts' matrix are zero")
+    stop("All elements of 'counts' are zero")
   if(any(colSums(counts) == 0))
-    warning("Library size of zero detected in 'counts' matrix")
+    warning("Library size of zero detected in 'counts'")
 
-  if(class(group) != "factor")
-    stop("Wrong data type of 'group'")
+  if(!is.factor(group))
+    stop("Data type of 'group' is not factor")
   if(length(levels(group)) != 2)
-    stop("Wrong number of levels in 'group'")
+    stop("Levels number of 'group' is not two")
   if(table(group)[1] < 2 | table(group)[2] < 2)
-    stop("Too few samples (< 2) in one group")
+    stop("Too few samples (< 2) in a group")
   if(ncol(counts) != length(group))
-    stop("Length of 'group' must equal column number of 'counts'")
+    stop("Length of 'group' must equal to column number of 'counts'")
+
+  if(!is.logical(parallel))
+    stop("Data type of 'parallel' is not logical")
+  if(length(parallel) != 1)
+    stop("Length of 'parallel' is not one")
 
   # Filter all-zero genes
+  counts <- as.matrix(counts)
+  sampleNum <- ncol(counts)
   if(any(rowSums(counts) == 0))
     message("Removing ", sum(rowSums(counts) == 0), " rows of genes with all zero counts")
   counts_NAZ <- counts[rowSums(counts) != 0,]
   geneNum_NAZ <- nrow(counts_NAZ)
 
   # Normalization
-  sampleNum <- ncol(counts)
   GEOmean <- rep(NA,geneNum_NAZ)
   for (i in 1:geneNum_NAZ)
   {
@@ -111,12 +118,10 @@ DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
   # Function of testing homogeneity of two ZINB populations
   CallDE <- function(i){
 
-    # Function output variable
-    results_gene <- data.frame(row.names = row.names(counts_norm)[i], theta_1 = NA, theta_2 = NA, mu_1 = NA, mu_2 = NA, size_1 = NA, size_2 = NA, prob_1 = NA, prob_2 = NA, total_mean_1 = NA, total_mean_2 = NA, foldChange = NA, norm_total_mean_1 = NA, norm_total_mean_2 = NA, norm_foldChange = NA, chi2LR1 = NA, pvalue_LR2 = NA, pvalue_LR3 = NA, FDR_LR2 = NA, FDR_LR3 = NA, pvalue = NA, pvalue.adj.FDR = NA, Remark = NA)
-
-    # Function main input data
+    # Function input and output
     counts_1 <- counts_norm[i, group == levels(group)[1]]
     counts_2 <- counts_norm[i, group == levels(group)[2]]
+    results_gene <- data.frame(row.names = row.names(counts_norm)[i], theta_1 = NA, theta_2 = NA, mu_1 = NA, mu_2 = NA, size_1 = NA, size_2 = NA, prob_1 = NA, prob_2 = NA, total_mean_1 = NA, total_mean_2 = NA, foldChange = NA, norm_total_mean_1 = NA, norm_total_mean_2 = NA, norm_foldChange = NA, chi2LR1 = NA, pvalue_LR2 = NA, pvalue_LR3 = NA, FDR_LR2 = NA, FDR_LR3 = NA, pvalue = NA, pvalue.adj.FDR = NA, Remark = NA)
 
     # Log likelihood functions
     logL <- function(counts_1, theta_1, size_1, prob_1, counts_2, theta_2, size_2, prob_2){
@@ -605,7 +610,6 @@ DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
     results <- do.call(rbind, bplapply(1:geneNum_NAZ, CallDE, BPPARAM = BPPARAM))
   }
 
-
   # Format output results
   results[,"FDR_LR2"] <- p.adjust(results[,"pvalue_LR2"], method="fdr")
   results[,"FDR_LR3"] <- p.adjust(results[,"pvalue_LR3"], method="fdr")
@@ -615,6 +619,7 @@ DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
     remove(lastFuncGrad, lastFuncParam, envir=.GlobalEnv)
   cat(paste0("\n\n ",sum(!is.na(results[,"Remark"])), " gene failed.\n\n"))
   results
+
 
 
 }
