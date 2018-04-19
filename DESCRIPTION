@@ -33,4 +33,3 @@ Suggests:
 VignetteBuilder: knitr
 biocViews: DifferentialExpression, GeneExpression, SingleCell, RNASeq, Transcriptomics, Sequencing, Preprocessing, Software
 RoxygenNote: 6.0.1
-
