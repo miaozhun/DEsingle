@@ -1,7 +1,7 @@
 ---
 title: "DEsingle"
 author: "Zhun Miao"
-date: "2018-04-17"
+date: "2018-04-19"
 output: 
   html_document:
     toc: TRUE
@@ -94,7 +94,7 @@ summary(group)
 
 Here is an example to run `DEsingle` with read counts matrix input:
 
-```{r demo, eval = FALSE}
+```{r demo1, eval = FALSE}
 # Load library and the test data for DEsingle
 library(DEsingle)
 data(TestData)
@@ -119,10 +119,7 @@ Here is an example to run `DEsingle` with SingleCellExperiment input:
 ```{r demo2, eval = FALSE}
 # Load library and the test data for DEsingle
 library(DEsingle)
-if(!require("SingleCellExperiment")){
-  source("https://bioconductor.org/biocLite.R")
-  biocLite("SingleCellExperiment")
-}
+library(SingleCellExperiment)
 data(TestData)
 
 # Convert the test data in DEsingle to SingleCellExperiment data representation
@@ -163,7 +160,7 @@ The output of `DEsingle` is a matrix containing the differential expression (DE)
 
 ## Parallelization
 
-`DEsingle` integrates parallel computing function with [`BiocParallel`](http://bioconductor.org/packages/BiocParallel/). Users could just set `parallel = TRUE` in `DEsingle` to enable parallelization.
+`DEsingle` integrates parallel computing function with [`BiocParallel`](http://bioconductor.org/packages/BiocParallel/) package. Users could just set `parallel = TRUE` in `DEsingle` to enable parallelization and leave the `BPPARAM` parameter alone.
 
 ```{r demo3, eval = FALSE}
 # Load library
@@ -173,7 +170,43 @@ library(DEsingle)
 results <- DEsingle(counts = counts, group = group, parallel = TRUE)
 ```
 
-Advanced users could use the `BPPARAM` parameter to specify the parallel back-end to be used and its configuration parameters. See the [*Reference Manual*](https://bioconductor.org/packages/release/bioc/manuals/BiocParallel/man/BiocParallel.pdf) of [`BiocParallel`](http://bioconductor.org/packages/BiocParallel/) for details.
+Advanced users could use a `BiocParallelParam` object from package `BiocParallel` to fill in the `BPPARAM` parameter to specify the parallel back-end to be used and its configuration parameters.
+
+### For Unix and Mac users
+
+The best choice for Unix and Mac users is to use `MulticoreParam` to configure a multicore parallel back-end:
+
+```{r demo4, eval = FALSE}
+# Load library
+library(DEsingle)
+library(BiocParallel)
+
+# Set the parameters and register the back-end to be used
+param <- MulticoreParam(workers = 18, progressbar = TRUE)
+register(param)
+
+# Detecting the differentially expressed genes in parallelization with 18 cores
+results <- DEsingle(counts = counts, group = group, parallel = TRUE, BPPARAM = param)
+```
+
+### For Windows users
+
+For Windows users, use `SnowParam` to configure a Snow back-end is a good choice:
+
+```{r demo5, eval = FALSE}
+# Load library
+library(DEsingle)
+library(BiocParallel)
+
+# Set the parameters and register the back-end to be used
+param <- SnowParam(workers = 8, type = "SOCK", progressbar = TRUE)
+register(param)
+
+# Detecting the differentially expressed genes in parallelization with 8 cores
+results <- DEsingle(counts = counts, group = group, parallel = TRUE, BPPARAM = param)
+```
+
+See the [*Reference Manual*](https://bioconductor.org/packages/release/bioc/manuals/BiocParallel/man/BiocParallel.pdf) of [`BiocParallel`](http://bioconductor.org/packages/BiocParallel/) package for more details of the `BiocParallelParam` class.
 
 
 ## Visualization of results
@@ -192,17 +225,17 @@ Use `browseVignettes("DEsingle")` to see the vignettes of `DEsingle` in R after 
 
 Use the following code in R to get access to the help documentation for `DEsingle`:
 
-```
+```{r help1, eval = FALSE}
 # Documentation for DEsingle
 ?DEsingle
 ```
 
-```
+```{r help2, eval = FALSE}
 # Documentation for DEtype
 ?DEtype
 ```
 
-```
+```{r help3, eval = FALSE}
 # Documentation for TestData
 ?TestData
 ?counts
