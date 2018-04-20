@@ -31,5 +31,6 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+URL: https://github.com/miaozhun/DEsingle
 biocViews: DifferentialExpression, GeneExpression, SingleCell, RNASeq, Transcriptomics, Sequencing, Preprocessing, Software
 RoxygenNote: 6.0.1
