@@ -1,0 +1,14 @@
+citEntry(entry="article",
+         title = "DEsingle for detecting three types of differential expression in single-cell RNA-seq data",
+         author = personList( as.person("Zhun Miao"),
+                              as.person("Ke Deng"),
+							  as.person("Xiaowo Wang"),
+                              as.person("Xuegong Zhang")),
+         year = 2018,
+         journal = "bioRxiv",
+         doi = "10.1101/173997",
+         pages = 173997,
+         textVersion = 
+         paste("Zhun Miao, Ke Deng, Xiaowo Wang, Xuegong Zhang.", 
+               "DEsingle for detecting three types of differential expression in single-cell RNA-seq data.",
+               "bioRxiv (2018): 173997."))
