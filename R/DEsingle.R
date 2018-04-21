@@ -246,7 +246,6 @@ DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
           if('try-error' %in% class(zinb_try_twice)){
             print("MLE of ZINB failed!");
             results_gene[1,"Remark"] <- "ZINB failed!"
-            next;
           }else{
             zinb_1 <- zinb_try_twice
             theta_1 <- plogis(zinb_1$coefficients$zero);names(theta_1) <- NULL
@@ -275,7 +274,6 @@ DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
             if('try-error' %in% class(nb_try_fourth)){
               print("MLE of NB failed!");
               results_gene[1,"Remark"] <- "NB failed!"
-              next;
             }else{
               nb_1 <- nb_try_fourth
               theta_1 <- 0
@@ -322,7 +320,6 @@ DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
           if('try-error' %in% class(zinb_try_twice)){
             print("MLE of ZINB failed!");
             results_gene[1,"Remark"] <- "ZINB failed!"
-            next;
           }else{
             zinb_2 <- zinb_try_twice
             theta_2 <- plogis(zinb_2$coefficients$zero);names(theta_2) <- NULL
@@ -351,7 +348,6 @@ DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
             if('try-error' %in% class(nb_try_fourth)){
               print("MLE of NB failed!");
               results_gene[1,"Remark"] <- "NB failed!"
-              next;
             }else{
               nb_2 <- nb_try_fourth
               theta_2 <- 0
@@ -392,7 +388,6 @@ DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
         if('try-error' %in% class(zinb_try_twice)){
           print("MLE of ZINB failed!");
           results_gene[1,"Remark"] <- "ZINB failed!"
-          next;
         }else{
           zinb_res <- zinb_try_twice
           theta_res <- plogis(zinb_res$coefficients$zero);names(theta_res) <- NULL
@@ -518,7 +513,6 @@ DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
             if('try-error' %in% class(nb_try_fourth)){
               print("MLE of NB failed!");
               results_gene[1,"Remark"] <- "NB failed!"
-              next;
             }else{
               nb_res <- nb_try_fourth
               theta_res <- 0
