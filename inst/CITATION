@@ -5,10 +5,10 @@ citEntry(entry="article",
 							  as.person("Xiaowo Wang"),
                               as.person("Xuegong Zhang")),
          year = 2018,
-         journal = "bioRxiv",
-         doi = "10.1101/173997",
-         pages = 173997,
+         journal = "Bioinformatics",
+         doi = "10.1093/bioinformatics/bty332",
+         pages = bty332,
          textVersion = 
          paste("Zhun Miao, Ke Deng, Xiaowo Wang, Xuegong Zhang.", 
                "DEsingle for detecting three types of differential expression in single-cell RNA-seq data.",
-               "bioRxiv (2018): 173997."))
+               "Bioinformatics (2018): bty332."))
