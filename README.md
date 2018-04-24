@@ -12,7 +12,14 @@
 
 **`DEsingle`** employs the Zero-Inflated Negative Binomial model for differential expression analysis. By estimating the proportion of real and dropout zeros, it not only detects DE genes **at higher accuracy** but also **subdivides three types of differential expression with different regulatory and functional mechanisms**.
 
-For more information, please refer to the [original manuscript](https://www.biorxiv.org/content/early/2018/03/26/173997) by *Zhun Miao, Ke Deng, Xiaowo Wang and Xuegong Zhang*.
+For more information, please refer to the [manuscript](https://doi.org/10.1093/bioinformatics/bty332) by *Zhun Miao, Ke Deng, Xiaowo Wang and Xuegong Zhang*.
+
+
+## Citation
+
+If you use **`DEsingle`** in published research, please cite:
+
+> Zhun Miao, Ke Deng, Xiaowo Wang, Xuegong Zhang (2018). DEsingle for detecting three types of differential expression in single-cell RNA-seq data. Bioinformatics, bty332. [10.1093/bioinformatics/bty332.](https://doi.org/10.1093/bioinformatics/bty332)
 
 
 ## Installation
@@ -216,12 +223,12 @@ See the [*Reference Manual*](https://bioconductor.org/packages/release/bioc/manu
 
 ## Visualization of results
 
-Users could use the `heatmap()` function in `stats` or `heatmap.2` function in `gplots` to plot the heatmap of the DE genes DEsingle found, as we did in Figure S3 of the [*manuscript*](https://www.biorxiv.org/content/early/2018/03/26/173997).
+Users could use the `heatmap()` function in `stats` or `heatmap.2` function in `gplots` to plot the heatmap of the DE genes DEsingle found, as we did in Figure S3 of the [*manuscript*](https://doi.org/10.1093/bioinformatics/bty332).
 
 
 ## Interpretation of results
 
-For the interpretation of results when **`DEsingle`** applied to real data, please refer to the *Three types of DE genes between E3 and E4 of human embryonic cells* part in the [*Supplementary Materials*](https://www.biorxiv.org/content/biorxiv/suppl/2018/03/26/173997.DC4/173997-1.pdf) of our [*manuscript*](https://www.biorxiv.org/content/early/2018/03/26/173997).
+For the interpretation of results when **`DEsingle`** applied to real data, please refer to the *Three types of DE genes between E3 and E4 of human embryonic cells* part in the [*Supplementary Materials*](https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/bty332/4983067#supplementary-data) of our [*manuscript*](https://doi.org/10.1093/bioinformatics/bty332).
 
 
 ## Help
@@ -247,7 +254,7 @@ Use the following code in R to get access to the help documentation for **`DEsin
 ?group
 ```
 
-You are also welcome to contact the author by email for help.
+You are also welcome to view and post *DEsingle* tagged questions on [Bioconductor Support Site of DEsingle](https://support.bioconductor.org/t/desingle/) or contact the author by email for help.
 
 
 ## Author
