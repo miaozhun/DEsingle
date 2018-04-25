@@ -7,7 +7,7 @@ citEntry(entry="article",
          year = 2018,
          journal = "Bioinformatics",
          doi = "10.1093/bioinformatics/bty332",
-         pages = bty332,
+         pages = "bty332",
          textVersion = 
          paste("Zhun Miao, Ke Deng, Xiaowo Wang, Xuegong Zhang.", 
                "DEsingle for detecting three types of differential expression in single-cell RNA-seq data.",
