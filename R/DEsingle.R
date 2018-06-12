@@ -45,26 +45,27 @@
 #' results.classified <- DEtype(results = results, threshold = 0.05)
 #'
 #' @import stats
-#' @import BiocParallel
-#' @import SingleCellExperiment
+#' @importFrom BiocParallel bpparam bplapply
+#' @importFrom Matrix Matrix
 #' @importFrom MASS glm.nb fitdistr
 #' @importFrom VGAM dzinegbin
 #' @importFrom bbmle mle2
 #' @importFrom gamlss gamlssML
 #' @importFrom maxLik maxLik
 #' @importFrom pscl zeroinfl
+#' @importMethodsFrom Matrix colSums
 #' @export
 
 
 
 DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
 
-  # Handle for SingleCellExperiment
+  # Handle SingleCellExperiment
   if(class(counts)[1] == "SingleCellExperiment")
     counts <- counts(counts)
 
   # Invalid input control
-  if(!is.matrix(counts) & !is.data.frame(counts))
+  if(!is.matrix(counts) & !is.data.frame(counts) & class(counts)[1] != "dgCMatrix")
     stop("Wrong data type of 'counts'")
   if(sum(is.na(counts)) > 0)
     stop("NA detected in 'counts'")
@@ -89,34 +90,55 @@ DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
   if(length(parallel) != 1)
     stop("Length of 'parallel' is not one")
 
-  # Filter all-zero genes
-  counts <- as.matrix(counts)
-  sampleNum <- ncol(counts)
+  # Preprocessing
+  counts <- round(as.matrix(counts))
+  storage.mode(counts) <- "integer"
   if(any(rowSums(counts) == 0))
     message("Removing ", sum(rowSums(counts) == 0), " rows of genes with all zero counts")
-  counts_NAZ <- counts[rowSums(counts) != 0,]
-  geneNum_NAZ <- nrow(counts_NAZ)
+  counts <- counts[rowSums(counts) != 0,]
+  geneNum <- nrow(counts)
+  sampleNum <- ncol(counts)
 
   # Normalization
-  GEOmean <- rep(NA,geneNum_NAZ)
-  for (i in 1:geneNum_NAZ)
-  {
-    gene_NZ <- counts_NAZ[i,counts_NAZ[i,] > 0]
-    GEOmean[i] <- exp(sum(log(gene_NZ), na.rm=TRUE) / length(gene_NZ))
+  normalization <- function(counts, geneNum, sampleNum){
+    GEOmean <- rep(NA,geneNum)
+    for (i in 1:geneNum)
+    {
+      gene_NZ <- counts[i,counts[i,] > 0]
+      GEOmean[i] <- exp(sum(log(gene_NZ), na.rm=TRUE) / length(gene_NZ))
+    }
+    S <- rep(NA, sampleNum)
+    counts_norm <- counts
+    for (j in 1:sampleNum)
+    {
+      sample_j <- counts[,j]/GEOmean
+      S[j] <- median(sample_j[which(sample_j != 0)])
+      counts_norm[,j] <- counts[,j]/S[j]
+    }
+    counts_norm <- ceiling(counts_norm)
+    return(counts_norm)
   }
-  S <- rep(NA, sampleNum)
-  counts_norm <- counts_NAZ
-  for (j in 1:sampleNum)
-  {
-    sample_j <- counts_NAZ[,j]/GEOmean
-    S[j] <- median(sample_j[which(sample_j != 0)])
-    counts_norm[,j] <- counts_NAZ[,j]/S[j]
-  }
-  counts_norm <- ceiling(counts_norm)
+  message("Normalizing the data")
+  counts_norm <- normalization(counts, geneNum, sampleNum)
+
+  # Cache totalMean and foldChange for each gene
+  totalMean_1 <- rowMeans(counts[row.names(counts_norm), group == levels(group)[1]])
+  totalMean_2 <- rowMeans(counts[row.names(counts_norm), group == levels(group)[2]])
+  foldChange <- totalMean_1/totalMean_2
+  All_Mean_FC <- cbind(totalMean_1, totalMean_2, foldChange)
+
+  # Memory management
+  remove(counts, totalMean_1, totalMean_2, foldChange)
+  counts_norm <- Matrix(counts_norm, sparse = TRUE)
+  gc()
 
 
   # Function of testing homogeneity of two ZINB populations
   CallDE <- function(i){
+
+    # Memory management
+    if(i %% 100 == 0)
+      gc()
 
     # Function input and output
     counts_1 <- counts_norm[i, group == levels(group)[1]]
@@ -585,9 +607,6 @@ DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
     results_gene[1,"size_2"] <- size_2
     results_gene[1,"prob_1"] <- prob_1
     results_gene[1,"prob_2"] <- prob_2
-    results_gene[1,"total_mean_1"] <- mean(counts_NAZ[i, group == levels(group)[1]])
-    results_gene[1,"total_mean_2"] <- mean(counts_NAZ[i, group == levels(group)[2]])
-    results_gene[1,"foldChange"] <- results_gene[1,"total_mean_1"] / results_gene[1,"total_mean_2"]
     results_gene[1,"norm_total_mean_1"] <- mean(counts_1)
     results_gene[1,"norm_total_mean_2"] <- mean(counts_2)
     results_gene[1,"norm_foldChange"] <- results_gene[1,"norm_total_mean_1"] / results_gene[1,"norm_total_mean_2"]
@@ -595,31 +614,37 @@ DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
     results_gene[1,"pvalue"] <- pvalue
     results_gene[1,"pvalue_LR2"] <- pvalue_LR2
     results_gene[1,"pvalue_LR3"] <- pvalue_LR3
-    results_gene
+    return(results_gene)
   }
 
 
   # Call DEG gene by gene
-  results <- NULL
   if(!parallel){
-    for(i in 1:geneNum_NAZ){
-      cat("\r",paste0("DEsingle is analyzing ", i," of ",geneNum_NAZ," expressed genes"))
-      results <- rbind(results, CallDE(i))
+    results <- matrix(data=NA, nrow = geneNum, ncol = 22, dimnames = list(row.names(counts_norm), c("theta_1", "theta_2", "mu_1", "mu_2", "size_1", "size_2", "prob_1", "prob_2", "total_mean_1", "total_mean_2", "foldChange", "norm_total_mean_1", "norm_total_mean_2", "norm_foldChange", "chi2LR1", "pvalue_LR2", "pvalue_LR3", "FDR_LR2", "FDR_LR3", "pvalue", "pvalue.adj.FDR", "Remark")))
+    results <- as.data.frame(results)
+    for(i in 1:geneNum){
+      cat("\r",paste0("DEsingle is analyzing ", i," of ",geneNum," expressed genes"))
+      results[i,] <- CallDE(i)
     }
   }else{
-    results <- do.call(rbind, bplapply(1:geneNum_NAZ, CallDE, BPPARAM = BPPARAM))
+    message("DEsingle is analyzing ", geneNum, " expressed genes in parallel")
+    results <- do.call(rbind, bplapply(1:geneNum, CallDE, BPPARAM = BPPARAM))
   }
 
-
   # Format output results
+  results[, c("total_mean_1", "total_mean_2", "foldChange")] <- All_Mean_FC
   results[,"FDR_LR2"] <- p.adjust(results[,"pvalue_LR2"], method="fdr")
   results[,"FDR_LR3"] <- p.adjust(results[,"pvalue_LR3"], method="fdr")
   results[,"pvalue.adj.FDR"] <- p.adjust(results[,"pvalue"], method="fdr")
   results <- results[order(results[,"chi2LR1"], decreasing = TRUE),]
+
+  # Abnormity control
   if(exists("lastFuncGrad") & exists("lastFuncParam"))
     remove(lastFuncGrad, lastFuncParam, envir=.GlobalEnv)
-  cat(paste0("\n\n ",sum(!is.na(results[,"Remark"])), " gene failed.\n\n"))
-  results
+  if(sum(!is.na(results[,"Remark"])) != 0)
+    cat(paste0("\n\n ",sum(!is.na(results[,"Remark"])), " gene failed.\n\n"))
+
+  return(results)
 
 
 }
