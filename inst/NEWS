@@ -1,3 +1,11 @@
+VERSION 1.0.1
+-------------------------
+   o Optimization of memory management.
+
+VERSION 1.0.0
+-------------------------
+   o Package released in Bioconductor.
+
 VERSION 0.99.12
 -------------------------
    o Documentation improvements.
