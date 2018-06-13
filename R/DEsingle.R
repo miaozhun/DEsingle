@@ -61,8 +61,10 @@
 DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
 
   # Handle SingleCellExperiment
-  if(class(counts)[1] == "SingleCellExperiment")
+  if(class(counts)[1] == "SingleCellExperiment"){
+    require(SingleCellExperiment)
     counts <- counts(counts)
+  }
 
   # Invalid input control
   if(!is.matrix(counts) & !is.data.frame(counts) & class(counts)[1] != "dgCMatrix")
