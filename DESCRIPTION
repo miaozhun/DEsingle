@@ -1,8 +1,8 @@
 Package: DEsingle
 Type: Package
 Title: DEsingle for detecting three types of differential expression in single-cell RNA-seq data
-Version: 1.0.0
-Date: 2017-06-06
+Version: 1.1.1
+Date: 2018-06-12
 Author: Zhun Miao <miaoz13@mails.tsinghua.edu.cn>
 Maintainer: Zhun Miao <miaoz13@mails.tsinghua.edu.cn>
 Description: DEsingle is an R package for differential expression (DE) analysis of
@@ -19,6 +19,7 @@ LazyData: true
 Depends: R (>= 3.4.0)
 Imports:
     stats,
+    Matrix (>= 1.2-14),
     MASS (>= 7.3-45),
     VGAM (>= 1.0-2),
     bbmle (>= 1.0.18),
@@ -26,10 +27,10 @@ Imports:
     maxLik (>= 1.3-4),
     pscl (>= 1.4.9),
     BiocParallel (>= 1.12.0),
-    SingleCellExperiment (>= 1.0.0)
 Suggests:
     knitr,
-    rmarkdown
+    rmarkdown,
+    SingleCellExperiment
 VignetteBuilder: knitr
 URL: https://github.com/miaozhun/DEsingle
 biocViews: DifferentialExpression, GeneExpression, SingleCell, RNASeq, Transcriptomics, Sequencing, Preprocessing, Software
