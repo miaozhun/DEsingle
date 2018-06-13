@@ -45,14 +45,15 @@
 #' results.classified <- DEtype(results = results, threshold = 0.05)
 #'
 #' @import stats
-#' @import BiocParallel
-#' @import SingleCellExperiment
+#' @importFrom BiocParallel bpparam bplapply
+#' @importFrom Matrix Matrix
 #' @importFrom MASS glm.nb fitdistr
 #' @importFrom VGAM dzinegbin
 #' @importFrom bbmle mle2
 #' @importFrom gamlss gamlssML
 #' @importFrom maxLik maxLik
 #' @importFrom pscl zeroinfl
+#' @importMethodsFrom Matrix colSums
 #' @export
 
 
