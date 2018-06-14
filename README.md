@@ -27,7 +27,8 @@ If you use **`DEsingle`** in published research, please cite:
 To install **`DEsingle`** from [**Bioconductor**](http://bioconductor.org/packages/DEsingle/):
 
 ```{r Installation from Bioconductor, eval = FALSE}
-BiocInstaller::biocLite("DEsingle")
+source("https://bioconductor.org/biocLite.R")
+biocLite("DEsingle")
 ```
 
 To install the *developmental version* from [**GitHub**](https://github.com/miaozhun/DEsingle/):
