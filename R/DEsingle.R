@@ -62,7 +62,8 @@ DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
 
   # Handle SingleCellExperiment
   if(class(counts)[1] == "SingleCellExperiment"){
-    require(SingleCellExperiment)
+    if(!require(SingleCellExperiment))
+      stop("To use SingleCellExperiment as input, you should install the package firstly")
     counts <- counts(counts)
   }
 
