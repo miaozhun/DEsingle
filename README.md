@@ -6,6 +6,7 @@
 
 ![Logo](https://github.com/miaozhun/DEsingle/blob/master/vignettes/DEsingle_LOGO.png?raw=true)
 
+---
 
 # Introduction
 
