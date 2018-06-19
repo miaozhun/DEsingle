@@ -1,6 +1,6 @@
 ![platform](https://bioconductor.org/shields/availability/3.7/DEsingle.svg)
-![build](https://bioconductor.org/shields/build/release/bioc/DEsingle.svg)
-![downloads](https://bioconductor.org/shields/downloads/DEsingle.svg)
+[![build](https://bioconductor.org/shields/build/release/bioc/DEsingle.svg)](http://bioconductor.org/checkResults/release/bioc-LATEST/DEsingle/)
+[![downloads](https://bioconductor.org/shields/downloads/DEsingle.svg)](https://bioconductor.org/packages/release/bioc/src/contrib/DEsingle_1.0.3.tar.gz)
 
 # DEsingle
 
