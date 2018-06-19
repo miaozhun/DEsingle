@@ -1,12 +1,13 @@
 # DEsingle
 
 *Zhun Miao*
+
 *2018-06-19*
 
 ![Logo](https://github.com/miaozhun/DEsingle/blob/master/vignettes/DEsingle_LOGO.png?raw=true)
 
 
-## Introduction
+# Introduction
 
 **`DEsingle`** is an R package for **differential expression (DE) analysis of single-cell RNA-seq (scRNA-seq) data**. It will detect differentially expressed genes between two groups of cells in a scRNA-seq raw read counts matrix.
 
@@ -15,14 +16,14 @@
 For more information, please refer to the [manuscript](https://doi.org/10.1093/bioinformatics/bty332) by *Zhun Miao, Ke Deng, Xiaowo Wang and Xuegong Zhang*.
 
 
-## Citation
+# Citation
 
 If you use **`DEsingle`** in published research, please cite:
 
 > Zhun Miao, Ke Deng, Xiaowo Wang, Xuegong Zhang (2018). DEsingle for detecting three types of differential expression in single-cell RNA-seq data. Bioinformatics, bty332. [10.1093/bioinformatics/bty332.](https://doi.org/10.1093/bioinformatics/bty332)
 
 
-## Installation
+# Installation
 
 To install **`DEsingle`** from [**Bioconductor**](http://bioconductor.org/packages/DEsingle/):
 
@@ -44,7 +45,7 @@ library(DEsingle)
 ```
 
 
-## Input
+# Input
 
 **`DEsingle`** takes two inputs: `counts` and `group`.
 
@@ -53,7 +54,7 @@ The input `counts` is a scRNA-seq **raw read counts matrix** or a **`SingleCellE
 The other input `group` is a vector of factor which specifies the two groups in the matrix to be compared, corresponding to the columns in `counts`.
 
 
-## Test data
+# Test data
 
 Users can load the test data in **`DEsingle`** by
 
@@ -77,9 +78,9 @@ summary(group)
 ```
 
 
-## Usage
+# Usage
 
-### With read counts matrix input
+## With read counts matrix input
 
 Here is an example to run **`DEsingle`** with read counts matrix input:
 
@@ -99,7 +100,7 @@ results <- DEsingle(counts = counts, group = group)
 results.classified <- DEtype(results = results, threshold = 0.05)
 ```
 
-### With SingleCellExperiment input
+## With SingleCellExperiment input
 
 The [`SingleCellExperiment`](http://bioconductor.org/packages/SingleCellExperiment/) class is a widely used S4 class for storing single-cell genomics data. **`DEsingle`** also could take the `SingleCellExperiment` data representation as input.
 
@@ -126,7 +127,7 @@ results.classified <- DEtype(results = results, threshold = 0.05)
 ```
 
 
-## Output
+# Output
 
 `DEtype` subdivides the DE genes found by `DEsingle` into 3 types: **`DEs`**, **`DEa`** and **`DEg`**.
 
@@ -171,7 +172,7 @@ results.DEg <- results.sig[results.sig$Type == "DEg", ]
 ```
 
 
-## Parallelization
+# Parallelization
 
 **`DEsingle`** integrates parallel computing function with [`BiocParallel`](http://bioconductor.org/packages/BiocParallel/) package. Users could just set `parallel = TRUE` in function `DEsingle` to enable parallelization and leave the `BPPARAM` parameter alone.
 
@@ -185,7 +186,7 @@ results <- DEsingle(counts = counts, group = group, parallel = TRUE)
 
 Advanced users could use a `BiocParallelParam` object from package `BiocParallel` to fill in the `BPPARAM` parameter to specify the parallel back-end to be used and its configuration parameters.
 
-### For Unix and Mac users
+## For Unix and Mac users
 
 The best choice for Unix and Mac users is to use `MulticoreParam` to configure a multicore parallel back-end:
 
@@ -202,7 +203,7 @@ register(param)
 results <- DEsingle(counts = counts, group = group, parallel = TRUE, BPPARAM = param)
 ```
 
-### For Windows users
+## For Windows users
 
 For Windows users, use `SnowParam` to configure a Snow back-end is a good choice:
 
@@ -222,17 +223,17 @@ results <- DEsingle(counts = counts, group = group, parallel = TRUE, BPPARAM = p
 See the [*Reference Manual*](https://bioconductor.org/packages/release/bioc/manuals/BiocParallel/man/BiocParallel.pdf) of [`BiocParallel`](http://bioconductor.org/packages/BiocParallel/) package for more details of the `BiocParallelParam` class.
 
 
-## Visualization of results
+# Visualization of results
 
 Users could use the `heatmap()` function in `stats` or `heatmap.2` function in `gplots` to plot the heatmap of the DE genes DEsingle found, as we did in Figure S3 of the [*manuscript*](https://doi.org/10.1093/bioinformatics/bty332).
 
 
-## Interpretation of results
+# Interpretation of results
 
 For the interpretation of results when **`DEsingle`** applied to real data, please refer to the *Three types of DE genes between E3 and E4 of human embryonic cells* part in the [*Supplementary Materials*](https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/bty332/4983067#supplementary-data) of our [*manuscript*](https://doi.org/10.1093/bioinformatics/bty332).
 
 
-## Help
+# Help
 
 Use `browseVignettes("DEsingle")` to see the vignettes of **`DEsingle`** in R after installation.
 
@@ -258,7 +259,7 @@ Use the following code in R to get access to the help documentation for **`DEsin
 You are also welcome to view and post *DEsingle* tagged questions on [Bioconductor Support Site of DEsingle](https://support.bioconductor.org/t/desingle/) or contact the author by email for help.
 
 
-## Author
+# Author
 
 *Zhun Miao* <<miaoz13@mails.tsinghua.edu.cn>>
 
