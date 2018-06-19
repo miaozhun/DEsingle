@@ -22,6 +22,7 @@ For more information, please refer to the [manuscript](https://doi.org/10.1093/b
 If you use **`DEsingle`** in published research, please cite:
 
 > Zhun Miao, Ke Deng, Xiaowo Wang, Xuegong Zhang (2018). DEsingle for detecting three types of differential expression in single-cell RNA-seq data. Bioinformatics, bty332. [10.1093/bioinformatics/bty332.](https://doi.org/10.1093/bioinformatics/bty332)
+
 <br><br>
 
 
