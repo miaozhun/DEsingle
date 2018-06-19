@@ -26,20 +26,20 @@ If you use **`DEsingle`** in published research, please cite:
 
 To install **`DEsingle`** from [**Bioconductor**](http://bioconductor.org/packages/DEsingle/):
 
-```{r Installation from Bioconductor, eval = FALSE}
+```
 source("https://bioconductor.org/biocLite.R")
 biocLite("DEsingle")
 ```
 
 To install the *developmental version* from [**GitHub**](https://github.com/miaozhun/DEsingle/):
 
-```{r Installation from GitHub, eval = FALSE}
+```
 devtools::install_github("miaozhun/DEsingle", build_vignettes = TRUE)
 ```
 
 To load the installed **`DEsingle`** in R:
 
-```{r Load DEsingle, eval = FALSE}
+```
 library(DEsingle)
 ```
 
@@ -57,21 +57,21 @@ The other input `group` is a vector of factor which specifies the two groups in 
 
 Users can load the test data in **`DEsingle`** by
 
-```{r Load TestData}
+```
 library(DEsingle)
 data(TestData)
 ```
 
 The toy data `counts` in `TestData` is a scRNA-seq read counts matrix which has 200 genes (rows) and 150 cells (columns).
 
-```{r counts}
+```
 dim(counts)
 counts[1:6, 1:6]
 ```
 
 The object `group` in `TestData` is a vector of factor which has two levels and equal length to the column number of `counts`.
 
-```{r group}
+```
 length(group)
 summary(group)
 ```
@@ -83,7 +83,7 @@ summary(group)
 
 Here is an example to run **`DEsingle`** with read counts matrix input:
 
-```{r demo1, eval = FALSE}
+```
 # Load library and the test data for DEsingle
 library(DEsingle)
 data(TestData)
@@ -105,7 +105,7 @@ The [`SingleCellExperiment`](http://bioconductor.org/packages/SingleCellExperime
 
 Here is an example to run **`DEsingle`** with `SingleCellExperiment` input:
 
-```{r demo2, eval = FALSE}
+```
 # Load library and the test data for DEsingle
 library(DEsingle)
 library(SingleCellExperiment)
@@ -156,14 +156,14 @@ The output of `DEtype` is a matrix containing the DE analysis results, whose row
 
 To extract the significantly differentially expressed genes from the output of `DEtype` (**note that the same threshold of FDR should be used in this step as in `DEtype`**):
 
-```{r extract DE, eval = FALSE}
+```
 # Extract DE genes at threshold of FDR < 0.05
 results.sig <- results.classified[results.classified$pvalue.adj.FDR < 0.05, ]
 ```
 
 To further extract the three types of DE genes separately:
 
-```{r extract subtypes, eval = FALSE}
+```
 # Extract three types of DE genes separately
 results.DEs <- results.sig[results.sig$Type == "DEs", ]
 results.DEa <- results.sig[results.sig$Type == "DEa", ]
@@ -175,7 +175,7 @@ results.DEg <- results.sig[results.sig$Type == "DEg", ]
 
 **`DEsingle`** integrates parallel computing function with [`BiocParallel`](http://bioconductor.org/packages/BiocParallel/) package. Users could just set `parallel = TRUE` in function `DEsingle` to enable parallelization and leave the `BPPARAM` parameter alone.
 
-```{r demo3, eval = FALSE}
+```
 # Load library
 library(DEsingle)
 
@@ -189,7 +189,7 @@ Advanced users could use a `BiocParallelParam` object from package `BiocParallel
 
 The best choice for Unix and Mac users is to use `MulticoreParam` to configure a multicore parallel back-end:
 
-```{r demo4, eval = FALSE}
+```
 # Load library
 library(DEsingle)
 library(BiocParallel)
@@ -206,7 +206,7 @@ results <- DEsingle(counts = counts, group = group, parallel = TRUE, BPPARAM = p
 
 For Windows users, use `SnowParam` to configure a Snow back-end is a good choice:
 
-```{r demo5, eval = FALSE}
+```
 # Load library
 library(DEsingle)
 library(BiocParallel)
@@ -238,17 +238,17 @@ Use `browseVignettes("DEsingle")` to see the vignettes of **`DEsingle`** in R af
 
 Use the following code in R to get access to the help documentation for **`DEsingle`**:
 
-```{r help1, eval = FALSE}
+```
 # Documentation for DEsingle
 ?DEsingle
 ```
 
-```{r help2, eval = FALSE}
+```
 # Documentation for DEtype
 ?DEtype
 ```
 
-```{r help3, eval = FALSE}
+```
 # Documentation for TestData
 ?TestData
 ?counts
