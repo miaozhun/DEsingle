@@ -102,7 +102,7 @@ summary(group)
 
 # Usage
 
-## With read counts matrix input
+## Read counts matrix input
 
 Here is an example to run **`DEsingle`** with read counts matrix input:
 
@@ -124,7 +124,7 @@ results.classified <- DEtype(results = results, threshold = 0.05)
 
 <br>
 
-## With SingleCellExperiment input
+## SingleCellExperiment input
 
 The [`SingleCellExperiment`](http://bioconductor.org/packages/SingleCellExperiment/) class is a widely used S4 class for storing single-cell genomics data. **`DEsingle`** also could take the `SingleCellExperiment` data representation as input.
 
