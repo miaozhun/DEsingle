@@ -109,6 +109,7 @@ results <- DEsingle(counts = counts, group = group)
 # Dividing the DE genes into 3 categories at threshold of FDR < 0.05
 results.classified <- DEtype(results = results, threshold = 0.05)
 ```
+
 <br>
 
 ## With SingleCellExperiment input
@@ -200,6 +201,7 @@ results <- DEsingle(counts = counts, group = group, parallel = TRUE)
 ```
 
 Advanced users could use a `BiocParallelParam` object from package `BiocParallel` to fill in the `BPPARAM` parameter to specify the parallel back-end to be used and its configuration parameters.
+
 <br>
 
 ## For Unix and Mac users
@@ -218,6 +220,7 @@ register(param)
 # Detecting the DE genes in parallelization with 18 cores
 results <- DEsingle(counts = counts, group = group, parallel = TRUE, BPPARAM = param)
 ```
+
 <br>
 
 ## For Windows users
