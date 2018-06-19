@@ -7,6 +7,7 @@
 ![platform](https://bioconductor.org/shields/availability/3.7/DEsingle.svg)
 ![build](https://bioconductor.org/shields/build/release/bioc/DEsingle.svg)
 ![downloads](https://bioconductor.org/shields/downloads/DEsingle.svg)
+
 ![Logo](https://github.com/miaozhun/DEsingle/blob/master/vignettes/DEsingle_LOGO.png?raw=true)
 
 ---
