@@ -14,6 +14,7 @@
 **`DEsingle`** employs the Zero-Inflated Negative Binomial model for differential expression analysis. By estimating the proportion of real and dropout zeros, it not only detects DE genes **at higher accuracy** but also **subdivides three types of differential expression with different regulatory and functional mechanisms**.
 
 For more information, please refer to the [manuscript](https://doi.org/10.1093/bioinformatics/bty332) by *Zhun Miao, Ke Deng, Xiaowo Wang and Xuegong Zhang*.
+
 <br><br>
 
 
@@ -56,6 +57,7 @@ library(DEsingle)
 The input `counts` is a scRNA-seq **raw read counts matrix** or a **`SingleCellExperiment`** object which contains the read counts matrix. The rows of the matrix are genes and columns are cells.
 
 The other input `group` is a vector of factor which specifies the two groups in the matrix to be compared, corresponding to the columns in `counts`.
+
 <br><br>
 
 
