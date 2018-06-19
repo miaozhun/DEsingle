@@ -1,7 +1,5 @@
 # DEsingle
 
----
-
 *Zhun Miao*
 
 *2018-06-19*
