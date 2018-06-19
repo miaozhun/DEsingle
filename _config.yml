@@ -1,2 +1,9 @@
 theme: jekyll-theme-leap-day
 description: Detecting three types of differential expression in single-cell RNA-seq data
+show_downloads: true
+github:
+  is_project_page: true
+  repository_url: http://bioconductor.org/packages/DEsingle
+  zip_url: https://github.com/miaozhun/DEsingle
+  tar_url: https://doi.org/10.1093/bioinformatics/bty332
+  
