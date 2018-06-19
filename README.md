@@ -1,11 +1,13 @@
 # DEsingle
 
+---
+
 *Zhun Miao*
 
 *2018-06-19*
 
 [![build](https://bioconductor.org/shields/build/release/bioc/DEsingle.svg)](http://bioconductor.org/checkResults/release/bioc-LATEST/DEsingle/)
-![platform](https://bioconductor.org/shields/availability/3.7/DEsingle.svg)
+[![platform](https://bioconductor.org/shields/availability/3.7/DEsingle.svg)](https://bioconductor.org/packages/release/bioc/html/DEsingle.html#archives)
 [![downloads](https://bioconductor.org/shields/downloads/DEsingle.svg)](https://bioconductor.org/packages/release/bioc/src/contrib/DEsingle_1.0.3.tar.gz)
 
 ![Logo](https://github.com/miaozhun/DEsingle/blob/master/vignettes/DEsingle_LOGO.png?raw=true)
