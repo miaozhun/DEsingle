@@ -21,6 +21,7 @@
 For more information, please refer to the [manuscript](https://doi.org/10.1093/bioinformatics/bty332) by *Zhun Miao, Ke Deng, Xiaowo Wang and Xuegong Zhang*.
 
 <br>
+
 ---
 
 # Citation
@@ -30,6 +31,7 @@ If you use **`DEsingle`** in published research, please cite:
 > Zhun Miao, Ke Deng, Xiaowo Wang, Xuegong Zhang (2018). DEsingle for detecting three types of differential expression in single-cell RNA-seq data. Bioinformatics, bty332. [10.1093/bioinformatics/bty332.](https://doi.org/10.1093/bioinformatics/bty332)
 
 <br>
+
 ---
 
 # Installation
@@ -54,6 +56,7 @@ library(DEsingle)
 ```
 
 <br>
+
 ---
 
 # Input
@@ -65,6 +68,7 @@ The input `counts` is a scRNA-seq **raw read counts matrix** or a **`SingleCellE
 The other input `group` is a vector of factor which specifies the two groups in the matrix to be compared, corresponding to the columns in `counts`.
 
 <br>
+
 ---
 
 # Test data
@@ -91,6 +95,7 @@ summary(group)
 ```
 
 <br>
+
 ---
 
 # Usage
@@ -144,6 +149,7 @@ results.classified <- DEtype(results = results, threshold = 0.05)
 ```
 
 <br>
+
 ---
 
 # Output
@@ -191,6 +197,7 @@ results.DEg <- results.sig[results.sig$Type == "DEg", ]
 ```
 
 <br>
+
 ---
 
 # Parallelization
@@ -248,6 +255,7 @@ results <- DEsingle(counts = counts, group = group, parallel = TRUE, BPPARAM = p
 See the [*Reference Manual*](https://bioconductor.org/packages/release/bioc/manuals/BiocParallel/man/BiocParallel.pdf) of [`BiocParallel`](http://bioconductor.org/packages/BiocParallel/) package for more details of the `BiocParallelParam` class.
 
 <br>
+
 ---
 
 # Visualization of results
@@ -255,6 +263,7 @@ See the [*Reference Manual*](https://bioconductor.org/packages/release/bioc/manu
 Users could use the `heatmap()` function in `stats` or `heatmap.2` function in `gplots` to plot the heatmap of the DE genes DEsingle found, as we did in Figure S3 of the [*manuscript*](https://doi.org/10.1093/bioinformatics/bty332).
 
 <br>
+
 ---
 
 # Interpretation of results
@@ -262,6 +271,7 @@ Users could use the `heatmap()` function in `stats` or `heatmap.2` function in `
 For the interpretation of results when **`DEsingle`** applied to real data, please refer to the *Three types of DE genes between E3 and E4 of human embryonic cells* part in the [*Supplementary Materials*](https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/bty332/4983067#supplementary-data) of our [*manuscript*](https://doi.org/10.1093/bioinformatics/bty332).
 
 <br>
+
 ---
 
 # Help
@@ -290,6 +300,7 @@ Use the following code in R to get access to the help documentation for **`DEsin
 You are also welcome to view and post *DEsingle* tagged questions on [Bioconductor Support Site of DEsingle](https://support.bioconductor.org/t/desingle/) or contact the author by email for help.
 
 <br>
+
 ---
 
 # Author
@@ -299,5 +310,6 @@ You are also welcome to view and post *DEsingle* tagged questions on [Bioconduct
 MOE Key Laboratory of Bioinformatics; Bioinformatics Division and Center for Synthetic & Systems Biology, TNLIST; Department of Automation, Tsinghua University, Beijing 100084, China.
 
 <br>
+
 ---
 
