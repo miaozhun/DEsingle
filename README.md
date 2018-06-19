@@ -200,6 +200,7 @@ results <- DEsingle(counts = counts, group = group, parallel = TRUE)
 ```
 
 Advanced users could use a `BiocParallelParam` object from package `BiocParallel` to fill in the `BPPARAM` parameter to specify the parallel back-end to be used and its configuration parameters.
+<br>
 
 ## For Unix and Mac users
 
