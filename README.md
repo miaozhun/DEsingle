@@ -4,6 +4,9 @@
 
 *2018-06-19*
 
+![platform](https://bioconductor.org/shields/availability/3.7/DEsingle.svg)
+![build](https://bioconductor.org/shields/build/release/bioc/DEsingle.svg)
+![downloads](https://bioconductor.org/shields/downloads/DEsingle.svg)
 ![Logo](https://github.com/miaozhun/DEsingle/blob/master/vignettes/DEsingle_LOGO.png?raw=true)
 
 ---
@@ -16,8 +19,7 @@
 
 For more information, please refer to the [manuscript](https://doi.org/10.1093/bioinformatics/bty332) by *Zhun Miao, Ke Deng, Xiaowo Wang and Xuegong Zhang*.
 
-<br><br>
-
+---
 
 # Citation
 
