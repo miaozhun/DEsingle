@@ -110,6 +110,7 @@ results <- DEsingle(counts = counts, group = group)
 results.classified <- DEtype(results = results, threshold = 0.05)
 ```
 
+
 ## With SingleCellExperiment input
 
 The [`SingleCellExperiment`](http://bioconductor.org/packages/SingleCellExperiment/) class is a widely used S4 class for storing single-cell genomics data. **`DEsingle`** also could take the `SingleCellExperiment` data representation as input.
@@ -216,6 +217,7 @@ register(param)
 # Detecting the DE genes in parallelization with 18 cores
 results <- DEsingle(counts = counts, group = group, parallel = TRUE, BPPARAM = param)
 ```
+
 
 ## For Windows users
 
