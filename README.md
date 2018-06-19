@@ -106,7 +106,7 @@ summary(group)
 
 Here is an example to run **`DEsingle`** with read counts matrix input:
 
-```
+```r
 # Load library and the test data for DEsingle
 library(DEsingle)
 data(TestData)
@@ -130,7 +130,7 @@ The [`SingleCellExperiment`](http://bioconductor.org/packages/SingleCellExperime
 
 Here is an example to run **`DEsingle`** with `SingleCellExperiment` input:
 
-```
+```R
 # Load library and the test data for DEsingle
 library(DEsingle)
 library(SingleCellExperiment)
