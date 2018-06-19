@@ -47,6 +47,7 @@ To load the installed **`DEsingle`** in R:
 ```
 library(DEsingle)
 ```
+
 <br><br>
 
 
@@ -83,6 +84,7 @@ The object `group` in `TestData` is a vector of factor which has two levels and 
 length(group)
 summary(group)
 ```
+
 <br><br>
 
 
@@ -133,6 +135,7 @@ results <- DEsingle(counts = sce, group = group)
 # Dividing the DE genes into 3 categories at threshold of FDR < 0.05
 results.classified <- DEtype(results = results, threshold = 0.05)
 ```
+
 <br><br>
 
 
@@ -179,6 +182,7 @@ results.DEs <- results.sig[results.sig$Type == "DEs", ]
 results.DEa <- results.sig[results.sig$Type == "DEa", ]
 results.DEg <- results.sig[results.sig$Type == "DEg", ]
 ```
+
 <br><br>
 
 
@@ -231,18 +235,21 @@ results <- DEsingle(counts = counts, group = group, parallel = TRUE, BPPARAM = p
 ```
 
 See the [*Reference Manual*](https://bioconductor.org/packages/release/bioc/manuals/BiocParallel/man/BiocParallel.pdf) of [`BiocParallel`](http://bioconductor.org/packages/BiocParallel/) package for more details of the `BiocParallelParam` class.
+
 <br><br>
 
 
 # Visualization of results
 
 Users could use the `heatmap()` function in `stats` or `heatmap.2` function in `gplots` to plot the heatmap of the DE genes DEsingle found, as we did in Figure S3 of the [*manuscript*](https://doi.org/10.1093/bioinformatics/bty332).
+
 <br><br>
 
 
 # Interpretation of results
 
 For the interpretation of results when **`DEsingle`** applied to real data, please refer to the *Three types of DE genes between E3 and E4 of human embryonic cells* part in the [*Supplementary Materials*](https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/bty332/4983067#supplementary-data) of our [*manuscript*](https://doi.org/10.1093/bioinformatics/bty332).
+
 <br><br>
 
 
@@ -270,6 +277,7 @@ Use the following code in R to get access to the help documentation for **`DEsin
 ```
 
 You are also welcome to view and post *DEsingle* tagged questions on [Bioconductor Support Site of DEsingle](https://support.bioconductor.org/t/desingle/) or contact the author by email for help.
+
 <br><br>
 
 
