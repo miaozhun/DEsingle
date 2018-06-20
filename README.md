@@ -5,7 +5,7 @@
 *2018-06-19*
 
 [![build](https://bioconductor.org/shields/build/release/bioc/DEsingle.svg)](http://bioconductor.org/checkResults/release/bioc-LATEST/DEsingle/)
-[![platform](https://bioconductor.org/shields/availability/3.7/DEsingle.svg)](https://bioconductor.org/packages/release/bioc/html/DEsingle.html#archives)
+[![platform](https://bioconductor.org/shields/availability/3.7/DEsingle.svg)](https://miaozhun.github.io/DEsingle/#downloads)
 [![downloads](https://bioconductor.org/shields/downloads/DEsingle.svg)](https://bioconductor.org/packages/release/bioc/src/contrib/DEsingle_1.0.3.tar.gz)
 
 ![Logo](https://github.com/miaozhun/DEsingle/blob/master/vignettes/DEsingle_LOGO.png?raw=true)
@@ -102,7 +102,7 @@ summary(group)
 
 # Usage
 
-## Read counts matrix input
+**With read counts matrix input**
 
 Here is an example to run **`DEsingle`** with read counts matrix input:
 
@@ -124,7 +124,7 @@ results.classified <- DEtype(results = results, threshold = 0.05)
 
 <br>
 
-## SingleCellExperiment input
+**With SingleCellExperiment input**
 
 The [`SingleCellExperiment`](http://bioconductor.org/packages/SingleCellExperiment/) class is a widely used S4 class for storing single-cell genomics data. **`DEsingle`** also could take the `SingleCellExperiment` data representation as input.
 
@@ -218,7 +218,7 @@ Advanced users could use a `BiocParallelParam` object from package `BiocParallel
 
 <br>
 
-## For Unix and Mac users
+**For Unix and Mac users**
 
 The best choice for Unix and Mac users is to use `MulticoreParam` to configure a multicore parallel back-end:
 
@@ -237,7 +237,7 @@ results <- DEsingle(counts = counts, group = group, parallel = TRUE, BPPARAM = p
 
 <br>
 
-## For Windows users
+**For Windows users**
 
 For Windows users, use `SnowParam` to configure a Snow back-end is a good choice:
 
