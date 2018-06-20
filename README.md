@@ -8,9 +8,9 @@
 [![platform](https://bioconductor.org/shields/availability/3.7/DEsingle.svg)](https://bioconductor.org/packages/release/bioc/html/DEsingle.html#archives)
 [![downloads](https://bioconductor.org/shields/downloads/DEsingle.svg)](https://bioconductor.org/packages/release/bioc/src/contrib/DEsingle_1.0.3.tar.gz)
 
-[![Source Package](https://raw.githubusercontent.com/miaozhun/DEsingle/gh-pages/images/Source_Package.svg?sanitize=true)](https://bioconductor.org/packages/release/bioc/src/contrib/DEsingle_1.0.3.tar.gz)
-[![Windows Binary](https://raw.githubusercontent.com/miaozhun/DEsingle/gh-pages/images/Windows%20Binary.svg?sanitize=true)](https://bioconductor.org/packages/release/bioc/bin/windows/contrib/3.5/DEsingle_1.0.3.zip)
-[![Mac OS X 10.11](https://raw.githubusercontent.com/miaozhun/DEsingle/gh-pages/images/Mac%20OS%20X%2010.11.svg?sanitize=true)](https://bioconductor.org/packages/release/bioc/bin/macosx/el-capitan/contrib/3.5/DEsingle_1.0.3.tgz)
+[![Source_Package](https://raw.githubusercontent.com/miaozhun/DEsingle/gh-pages/images/Source_Package.svg?sanitize=true)](https://bioconductor.org/packages/release/bioc/src/contrib/DEsingle_1.0.3.tar.gz)
+[![Windows_Binary](https://raw.githubusercontent.com/miaozhun/DEsingle/gh-pages/images/Windows_Binary.svg?sanitize=true)](https://bioconductor.org/packages/release/bioc/bin/windows/contrib/3.5/DEsingle_1.0.3.zip)
+[![Mac_OS_X_10.11](https://raw.githubusercontent.com/miaozhun/DEsingle/gh-pages/images/Mac_OS_X_10.11.svg?sanitize=true)](https://bioconductor.org/packages/release/bioc/bin/macosx/el-capitan/contrib/3.5/DEsingle_1.0.3.tgz)
 
 ![Logo](https://github.com/miaozhun/DEsingle/blob/master/vignettes/DEsingle_LOGO.png?raw=true)
 
