@@ -48,6 +48,7 @@ biocLite("DEsingle")
 To install the *developmental version* from [**GitHub**](https://github.com/miaozhun/DEsingle/):
 
 ```R
+if(!require(devtools)) install.packages("devtools")
 devtools::install_github("miaozhun/DEsingle", build_vignettes = TRUE)
 ```
 
