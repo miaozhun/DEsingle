@@ -307,7 +307,7 @@ You are also welcome to view and post *DEsingle* tagged questions on [Bioconduct
 
 # Downloads
 
-...
+___
 
 [![Source_Package](https://raw.githubusercontent.com/miaozhun/DEsingle/gh-pages/images/Source_Package.svg?sanitize=true)](https://bioconductor.org/packages/release/bioc/src/contrib/DEsingle_1.0.3.tar.gz)
 
