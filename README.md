@@ -327,6 +327,7 @@ You are also welcome to view and post *DEsingle* tagged questions on [Bioconduct
 3. School of Life Sciences, Tsinghua University, Beijing 100084, China.
 
 *To whom correspondence should be addressed.
+
 Contact: zhangxg AT tsinghua.edu.cn
 
 ---
