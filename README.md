@@ -328,7 +328,7 @@ You are also welcome to view and post *DEsingle* tagged questions on [Bioconduct
 
 *To whom correspondence should be addressed.
 
-Contact: zhangxg AT tsinghua.edu.cn
+Contact: zhangxg at tsinghua.edu.cn
 
 ---
 
