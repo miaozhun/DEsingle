@@ -320,9 +320,12 @@ You are also welcome to view and post *DEsingle* tagged questions on [Bioconduct
 
 # Author
 
-*Zhun Miao<sub>1</sub>, Ke Deng<sub>2</sub>, Xiaowo Wang<sub>1</sub> and Xuegong Zhang<sub>1, 3,*</sub>*
+*Zhun Miao<sup>1</sup>, Ke Deng<sup>2</sup>, Xiaowo Wang<sup>1</sup> and Xuegong Zhang<sup>1, 3,*</sup>*
 
-MOE Key Laboratory of Bioinformatics; Bioinformatics Division and Center for Synthetic & Systems Biology, TNLIST; Department of Automation, Tsinghua University, Beijing 100084, China.
+1. MOE Key Laboratory of Bioinformatics; Bioinformatics Division and Center for Synthetic & Systems Biology, TNLIST; Department of Automation, Tsinghua University, Beijing 100084, China.
+2. Center for Statistical Science & Department of Industrial Engineering, Tsinghua University, Beijing 100084, China.
+3. School of Life Sciences, Tsinghua University, Beijing 100084, China.
+* To whom correspondence should be addressed.
 
 ---
 
