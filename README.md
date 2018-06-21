@@ -320,7 +320,7 @@ You are also welcome to view and post *DEsingle* tagged questions on [Bioconduct
 
 # Author
 
-*Zhun Miao* < <miaoz13@mails.tsinghua.edu.cn> >
+*Zhun Miao<sub>1</sub>, Ke Deng<sub>2</sub>, Xiaowo Wang<sub>1</sub> and Xuegong Zhang<sub>1, 3,*</sub>*
 
 MOE Key Laboratory of Bioinformatics; Bioinformatics Division and Center for Synthetic & Systems Biology, TNLIST; Department of Automation, Tsinghua University, Beijing 100084, China.
 
