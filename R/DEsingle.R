@@ -71,13 +71,13 @@ DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
   if(!is.matrix(counts) & !is.data.frame(counts) & class(counts)[1] != "dgCMatrix")
     stop("Wrong data type of 'counts'")
   if(sum(is.na(counts)) > 0)
-    stop("NA detected in 'counts'")
+    stop("NA detected in 'counts'");gc();
   if(sum(counts < 0) > 0)
-    stop("Negative value detected in 'counts'")
+    stop("Negative value detected in 'counts'");gc();
   if(all(counts == 0))
-    stop("All elements of 'counts' are zero")
+    stop("All elements of 'counts' are zero");gc();
   if(any(colSums(counts) == 0))
-    warning("Library size of zero detected in 'counts'")
+    warning("Library size of zero detected in 'counts'");gc();
 
   if(!is.factor(group))
     stop("Data type of 'group' is not factor")
@@ -101,6 +101,7 @@ DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
   counts <- counts[rowSums(counts) != 0,]
   geneNum <- nrow(counts)
   sampleNum <- ncol(counts)
+  gc()
 
   # Normalization
   normalization <- function(counts, geneNum, sampleNum){
@@ -123,6 +124,7 @@ DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
   }
   message("Normalizing the data")
   counts_norm <- normalization(counts, geneNum, sampleNum)
+  gc()
 
   # Cache totalMean and foldChange for each gene
   totalMean_1 <- rowMeans(counts[row.names(counts_norm), group == levels(group)[1]])
