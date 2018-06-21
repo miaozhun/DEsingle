@@ -1,7 +1,12 @@
 # DEsingle
 
-### *Zhun Miao*
-### *2017-06-06*
+*Zhun Miao*
+
+*2018-06-21*
+
+[![build](https://bioconductor.org/shields/build/release/bioc/DEsingle.svg)](http://bioconductor.org/checkResults/release/bioc-LATEST/DEsingle/)
+[![platform](https://bioconductor.org/shields/availability/3.7/DEsingle.svg)](https://miaozhun.github.io/DEsingle/#downloads)
+[![downloads](https://bioconductor.org/shields/downloads/DEsingle.svg)](https://bioconductor.org/packages/release/bioc/src/contrib/DEsingle_1.0.3.tar.gz)
 
 ![Logo](https://github.com/miaozhun/DEsingle/blob/master/vignettes/DEsingle_LOGO.png?raw=true)
 
@@ -27,13 +32,14 @@ If you use **`DEsingle`** in published research, please cite:
 To install **`DEsingle`** from [**Bioconductor**](http://bioconductor.org/packages/DEsingle/):
 
 ```{r Installation from Bioconductor, eval = FALSE}
-source("https://bioconductor.org/biocLite.R")
-biocLite("DEsingle")
+if(!require(BiocManager)) install.packages("BiocManager")
+BiocManager::install("DEsingle")
 ```
 
 To install the *developmental version* from [**GitHub**](https://github.com/miaozhun/DEsingle/):
 
 ```{r Installation from GitHub, eval = FALSE}
+if(!require(devtools)) install.packages("devtools")
 devtools::install_github("miaozhun/DEsingle", build_vignettes = TRUE)
 ```
 
