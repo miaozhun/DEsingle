@@ -2,7 +2,7 @@
 
 *Zhun Miao*
 
-*2018-06-20*
+*2018-06-21*
 
 [![build](https://bioconductor.org/shields/build/release/bioc/DEsingle.svg)](http://bioconductor.org/checkResults/release/bioc-LATEST/DEsingle/)
 [![platform](https://bioconductor.org/shields/availability/3.7/DEsingle.svg)](https://miaozhun.github.io/DEsingle/#downloads)
@@ -328,7 +328,7 @@ You are also welcome to view and post *DEsingle* tagged questions on [Bioconduct
 
 *To whom correspondence should be addressed.
 
-Contact: zhangxg at tsinghua.edu.cn
+Contact: *zhangxg at tsinghua.edu.cn*
 
 ---
 
