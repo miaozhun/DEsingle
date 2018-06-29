@@ -89,13 +89,13 @@ The toy data `counts` in `TestData` is a scRNA-seq read counts matrix which has 
 dim(counts)
 #> [1] 200 150
 counts[1:6, 1:6]
-#>              E3.46.3383   E3.51.3425   E3.46.3388   E3.51.3423   E3.46.3382   E3.49.3407
-#> BTG4                  22                   0                 12                 26                  0                   0
-#> GABRB1               0                   0                   0                   0                  0                   0
-#> IL9                       0                   0                   0                   0                  0                   0
-#> TAPBPL                2                   0                   5                   1                  0                   2
-#> KANK4                 0                   0                   0                   0                  0                   0
-#> CPSF2                12                   0                 95                   0                  5               115
+#>             E3.46.3383   E3.51.3425   E3.46.3388   E3.51.3423   E3.46.3382   E3.49.3407
+#> BTG4                 22                   0                 12                 26                  0                   0
+#> GABRB1              0                   0                   0                   0                  0                   0
+#> IL9                      0                   0                   0                   0                  0                   0
+#> TAPBPL               2                   0                   5                   1                  0                   2
+#> KANK4                0                   0                   0                   0                  0                   0
+#> CPSF2               12                   0                 95                   0                  5               115
 ```
 
 The object `group` in `TestData` is a vector of factor which has two levels and equal length to the column number of `counts`.
