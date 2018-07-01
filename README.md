@@ -2,7 +2,7 @@
 
 *Zhun Miao*
 
-*2018-06-30*
+*2018-07-02*
 
 [![build](https://bioconductor.org/shields/build/release/bioc/DEsingle.svg)](http://bioconductor.org/checkResults/release/bioc-LATEST/DEsingle/)
 [![platform](https://bioconductor.org/shields/availability/3.7/DEsingle.svg)](https://miaozhun.github.io/DEsingle/#downloads)
