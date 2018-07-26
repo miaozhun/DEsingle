@@ -2,7 +2,7 @@
 
 *Zhun Miao*
 
-*2018-07-02*
+*2018-07-26*
 
 [![build](https://bioconductor.org/shields/build/release/bioc/DEsingle.svg)](http://bioconductor.org/checkResults/release/bioc-LATEST/DEsingle/)
 [![platform](https://bioconductor.org/shields/availability/3.7/DEsingle.svg)](https://miaozhun.github.io/DEsingle/#downloads)
@@ -45,7 +45,15 @@ source("https://bioconductor.org/biocLite.R")
 biocLite("DEsingle")
 ```
 
-To install the *developmental version* from [**GitHub**](https://github.com/miaozhun/DEsingle/):
+To install the *developmental version* from [**Bioconductor**](https://bioconductor.org/packages/devel/bioc/html/DEsingle.html):
+
+```R
+if (!requireNamespace("BiocManager", quietly=TRUE))
+    install.packages("BiocManager")
+BiocManager::install("DEsingle", version = "devel")
+```
+
+Or install the *developmental version* from [**GitHub**](https://github.com/miaozhun/DEsingle/):
 
 ```R
 if(!require(devtools)) install.packages("devtools")
