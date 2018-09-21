@@ -104,26 +104,23 @@ DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
   gc()
 
   # Normalization
-  normalization <- function(counts, geneNum, sampleNum){
-    GEOmean <- rep(NA,geneNum)
-    for (i in 1:geneNum)
-    {
-      gene_NZ <- counts[i,counts[i,] > 0]
-      GEOmean[i] <- exp(sum(log(gene_NZ), na.rm=TRUE) / length(gene_NZ))
-    }
-    S <- rep(NA, sampleNum)
-    counts_norm <- counts
-    for (j in 1:sampleNum)
-    {
-      sample_j <- counts[,j]/GEOmean
-      S[j] <- median(sample_j[which(sample_j != 0)])
-      counts_norm[,j] <- counts[,j]/S[j]
-    }
-    counts_norm <- ceiling(counts_norm)
-    return(counts_norm)
-  }
   message("Normalizing the data")
-  counts_norm <- normalization(counts, geneNum, sampleNum)
+  GEOmean <- rep(NA,geneNum)
+  for (i in 1:geneNum)
+  {
+    gene_NZ <- counts[i,counts[i,] > 0]
+    GEOmean[i] <- exp(sum(log(gene_NZ), na.rm=TRUE) / length(gene_NZ))
+  }
+  S <- rep(NA, sampleNum)
+  counts_norm <- counts
+  for (j in 1:sampleNum)
+  {
+    sample_j <- counts[,j]/GEOmean
+    S[j] <- median(sample_j[which(sample_j != 0)])
+    counts_norm[,j] <- counts[,j]/S[j]
+  }
+  counts_norm <- ceiling(counts_norm)
+  remove(GEOmean, gene_NZ, S, sample_j, i, j)
   gc()
 
   # Cache totalMean and foldChange for each gene
