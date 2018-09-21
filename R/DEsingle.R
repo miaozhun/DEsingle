@@ -409,7 +409,7 @@ DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
       }
     }
 
-    # Restricted MLE of parameters of ZINB
+    # Restricted MLE under H0 (MLE of c(counts_1, counts_2))
     if(sum(c(counts_1, counts_2) == 0) > 0){
       options(show.error.messages = FALSE)
       zinb_try <- try(gamlssML(c(counts_1, counts_2), family="ZINBI"), silent=TRUE)
@@ -434,104 +434,6 @@ DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
         size_res <- 1/zinb_res$sigma;names(size_res) <- NULL
         prob_res <- size_res/(size_res + mu_res);names(prob_res) <- NULL
       }
-
-      options(warn=-1)
-      # Restricted MLE of logL2 and logL3
-      # logL2
-      A <- matrix(rbind(c(1, 0, 0, 0, 0), c(-1, 0, 0, 0, 0), c(0, 0, 1, 0 ,0), c(0, 0, -1, 0 ,0), c(0, 0, 0, 0 ,1), c(0, 0, 0, 0 ,-1)), 6, 5)
-      B <- c(1e-10, 1+1e-10, 1e-10, 1+1e-10, 1e-10, 1+1e-10)
-      mleL2 <- try(maxLik(logLik = logL2, start = c(theta_resL2 = 0.5, size_1_resL2 = 1, prob_1_resL2 = 0.5, size_2_resL2 = 1, prob_2_resL2 = 0.5), constraints=list(ineqA=A, ineqB=B)), silent=TRUE)
-      if('try-error' %in% class(mleL2)){
-        mleL2 <- try(maxLik(logLik = logL2, start = c(theta_resL2 = 0, size_1_resL2 = 1, prob_1_resL2 = 0.5, size_2_resL2 = 1, prob_2_resL2 = 0.5), constraints=list(ineqA=A, ineqB=B)), silent=TRUE)
-      }
-      if('try-error' %in% class(mleL2)){
-        mleL2 <- try(maxLik(logLik = logL2, start = c(theta_resL2 = 1, size_1_resL2 = 1, prob_1_resL2 = 0.5, size_2_resL2 = 1, prob_2_resL2 = 0.5), constraints=list(ineqA=A, ineqB=B)), silent=TRUE)
-      }
-      if('try-error' %in% class(mleL2)){
-        A <- matrix(rbind(c(0, 1, 0, 0), c(0, -1, 0, 0), c(0, 0, 0 ,1), c(0, 0, 0 ,-1)), 4, 4)
-        B <- c(1e-10, 1+1e-10, 1e-10, 1+1e-10)
-        mleL2 <- maxLik(logLik = logL2NZ, start = c(size_1_resL2 = 1, prob_1_resL2 = 0.5, size_2_resL2 = 1, prob_2_resL2 = 0.5), constraints=list(ineqA=A, ineqB=B))
-        theta_resL2 <- 0
-        size_1_resL2 <- mleL2$estimate["size_1_resL2"];names(size_1_resL2) <- NULL
-        prob_1_resL2 <- mleL2$estimate["prob_1_resL2"];names(prob_1_resL2) <- NULL
-        size_2_resL2 <- mleL2$estimate["size_2_resL2"];names(size_2_resL2) <- NULL
-        prob_2_resL2 <- mleL2$estimate["prob_2_resL2"];names(prob_2_resL2) <- NULL
-      }else{
-        theta_resL2 <- mleL2$estimate["theta_resL2"];names(theta_resL2) <- NULL
-        size_1_resL2 <- mleL2$estimate["size_1_resL2"];names(size_1_resL2) <- NULL
-        prob_1_resL2 <- mleL2$estimate["prob_1_resL2"];names(prob_1_resL2) <- NULL
-        size_2_resL2 <- mleL2$estimate["size_2_resL2"];names(size_2_resL2) <- NULL
-        prob_2_resL2 <- mleL2$estimate["prob_2_resL2"];names(prob_2_resL2) <- NULL
-      }
-
-      # logL3
-      if((sum(counts_1 == 0) > 0) & (sum(counts_2 == 0) > 0)){
-        # logL3
-        if(sum(counts_1 == 0) == length(counts_1)){
-          A <- matrix(rbind(c(0, 1, 0), c(0, -1, 0), c(0, 0 ,1), c(0, 0 ,-1)), 4, 3)
-          B <- c(1e-10, 1+1e-10, 1e-10, 1+1e-10)
-          mleL3 <- maxLik(logLik = logL3AZ1, start = c(size_resL3 = 1, prob_resL3 = 0.5, theta_2_resL3 = 0.5), constraints=list(ineqA=A, ineqB=B))
-          theta_1_resL3 <- 1
-          size_resL3 <- mleL3$estimate["size_resL3"];names(size_resL3) <- NULL
-          prob_resL3 <- mleL3$estimate["prob_resL3"];names(prob_resL3) <- NULL
-          theta_2_resL3 <- mleL3$estimate["theta_2_resL3"];names(theta_2_resL3) <- NULL
-        }else if(sum(counts_2 == 0) == length(counts_2)){
-          A <- matrix(rbind(c(1, 0, 0), c(-1, 0, 0), c(0, 0 ,1), c(0, 0 ,-1)), 4, 3)
-          B <- c(1e-10, 1+1e-10, 1e-10, 1+1e-10)
-          mleL3 <- maxLik(logLik = logL3AZ2, start = c(theta_1_resL3 = 0.5, size_resL3 = 1, prob_resL3 = 0.5), constraints=list(ineqA=A, ineqB=B))
-          theta_1_resL3 <- mleL3$estimate["theta_1_resL3"];names(theta_1_resL3) <- NULL
-          size_resL3 <- mleL3$estimate["size_resL3"];names(size_resL3) <- NULL
-          prob_resL3 <- mleL3$estimate["prob_resL3"];names(prob_resL3) <- NULL
-          theta_2_resL3 <- 1
-        }else{
-          A <- matrix(rbind(c(1, 0, 0, 0), c(-1, 0, 0, 0), c(0, 0, 1, 0), c(0, 0, -1, 0), c(0, 0, 0 ,1), c(0, 0, 0 ,-1)), 6, 4)
-          B <- c(1e-10, 1+1e-10, 1e-10, 1+1e-10, 1e-10, 1+1e-10)
-          mleL3 <- maxLik(logLik = logL3, start = c(theta_1_resL3 = 0.5, size_resL3 = 1, prob_resL3 = 0.5, theta_2_resL3 = 0.5), constraints=list(ineqA=A, ineqB=B))
-          theta_1_resL3 <- mleL3$estimate["theta_1_resL3"];names(theta_1_resL3) <- NULL
-          size_resL3 <- mleL3$estimate["size_resL3"];names(size_resL3) <- NULL
-          prob_resL3 <- mleL3$estimate["prob_resL3"];names(prob_resL3) <- NULL
-          theta_2_resL3 <- mleL3$estimate["theta_2_resL3"];names(theta_2_resL3) <- NULL
-        }
-      }else if(sum(counts_1 == 0) == 0){
-        # logL3
-        if(sum(counts_2 == 0) == length(counts_2)){
-          A <- matrix(rbind(c(0, 1), c(0, -1)), 2, 2)
-          B <- c(1e-10, 1+1e-10)
-          mleL3 <- maxLik(logLik = logL3NZ1AZ2, start = c(size_resL3 = 1, prob_resL3 = 0.5), constraints=list(ineqA=A, ineqB=B))
-          theta_1_resL3 <- 0
-          size_resL3 <- mleL3$estimate["size_resL3"];names(size_resL3) <- NULL
-          prob_resL3 <- mleL3$estimate["prob_resL3"];names(prob_resL3) <- NULL
-          theta_2_resL3 <- 1
-        }else{
-          A <- matrix(rbind(c(0, 1, 0), c(0, -1, 0), c(0, 0 ,1), c(0, 0 ,-1)), 4, 3)
-          B <- c(1e-10, 1+1e-10, 1e-10, 1+1e-10)
-          mleL3 <- maxLik(logLik = logL3NZ1, start = c(size_resL3 = 1, prob_resL3 = 0.5, theta_2_resL3 = 0.5), constraints=list(ineqA=A, ineqB=B))
-          theta_1_resL3 <- 0
-          size_resL3 <- mleL3$estimate["size_resL3"];names(size_resL3) <- NULL
-          prob_resL3 <- mleL3$estimate["prob_resL3"];names(prob_resL3) <- NULL
-          theta_2_resL3 <- mleL3$estimate["theta_2_resL3"];names(theta_2_resL3) <- NULL
-        }
-      }else if(sum(counts_2 == 0) == 0){
-        # logL3
-        if(sum(counts_1 == 0) == length(counts_1)){
-          A <- matrix(rbind(c(0, 1), c(0, -1)), 2, 2)
-          B <- c(1e-10, 1+1e-10)
-          mleL3 <- maxLik(logLik = logL3NZ2AZ1, start = c(size_resL3 = 1, prob_resL3 = 0.5), constraints=list(ineqA=A, ineqB=B))
-          theta_1_resL3 <- 1
-          size_resL3 <- mleL3$estimate["size_resL3"];names(size_resL3) <- NULL
-          prob_resL3 <- mleL3$estimate["prob_resL3"];names(prob_resL3) <- NULL
-          theta_2_resL3 <- 0
-        }else{
-          A <- matrix(rbind(c(1, 0, 0), c(-1, 0, 0), c(0, 0 ,1), c(0, 0 ,-1)), 4, 3)
-          B <- c(1e-10, 1+1e-10, 1e-10, 1+1e-10)
-          mleL3 <- maxLik(logLik = logL3NZ2, start = c(theta_1_resL3 = 0.5, size_resL3 = 1, prob_resL3 = 0.5), constraints=list(ineqA=A, ineqB=B))
-          theta_1_resL3 <- mleL3$estimate["theta_1_resL3"];names(theta_1_resL3) <- NULL
-          size_resL3 <- mleL3$estimate["size_resL3"];names(size_resL3) <- NULL
-          prob_resL3 <- mleL3$estimate["prob_resL3"];names(prob_resL3) <- NULL
-          theta_2_resL3 <- 0
-        }
-      }
-      options(warn=0)
     }else{
       op <- options(warn=2)
       nb_try <- try(glm.nb(formula = c(counts_1, counts_2) ~ 1), silent=TRUE)
@@ -574,34 +476,11 @@ DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
         size_res <- nb_res$theta;names(size_res) <- NULL
         prob_res <- size_res/(size_res + mu_res);names(prob_res) <- NULL
       }
-
-      # Restricted MLE of logL2
-      theta_resL2 <- 0
-      size_1_resL2 <- size_1
-      prob_1_resL2 <- prob_1
-      size_2_resL2 <- size_2
-      prob_2_resL2 <- prob_2
-
-      # Restricted MLE of logL3
-      theta_1_resL3 <- 0
-      size_resL3 <- size_res
-      prob_resL3 <- prob_res
-      theta_2_resL3 <- 0
     }
 
-    # Judge parameters
-    if(!(judgeParam(theta_resL2) & judgeParam(prob_1_resL2) & judgeParam(prob_2_resL2)))
-      results_gene[1,"Remark"] <- "logL2 failed!"
-    if(!(judgeParam(theta_1_resL3) & judgeParam(theta_2_resL3) & judgeParam(prob_resL3)))
-      results_gene[1,"Remark"] <- "logL3 failed!"
-
-    # LRT test
+    # # LRT test of H0
     chi2LR1 <- 2 *(logL(counts_1, theta_1, size_1, prob_1, counts_2, theta_2, size_2, prob_2) - logL(counts_1, theta_res, size_res, prob_res, counts_2, theta_res, size_res, prob_res))
     pvalue <- 1 - pchisq(chi2LR1, df = 3)
-    chi2LR2 <- 2 *(logL(counts_1, theta_1, size_1, prob_1, counts_2, theta_2, size_2, prob_2) - logL(counts_1, theta_resL2, size_1_resL2, prob_1_resL2, counts_2, theta_resL2, size_2_resL2, prob_2_resL2))
-    pvalue_LR2 <- 1 - pchisq(chi2LR2, df = 1)
-    chi2LR3 <- 2 *(logL(counts_1, theta_1, size_1, prob_1, counts_2, theta_2, size_2, prob_2) - logL(counts_1, theta_1_resL3, size_resL3, prob_resL3, counts_2, theta_2_resL3, size_resL3, prob_resL3))
-    pvalue_LR3 <- 1 - pchisq(chi2LR3, df = 2)
 
     # Format output
     results_gene[1,"theta_1"] <- theta_1
@@ -617,8 +496,139 @@ DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
     results_gene[1,"norm_foldChange"] <- results_gene[1,"norm_total_mean_1"] / results_gene[1,"norm_total_mean_2"]
     results_gene[1,"chi2LR1"] <- chi2LR1
     results_gene[1,"pvalue"] <- pvalue
-    results_gene[1,"pvalue_LR2"] <- pvalue_LR2
-    results_gene[1,"pvalue_LR3"] <- pvalue_LR3
+
+    # Restricted MLE of logL2 and logL3 under H20 and H30 when pvalue <= 0.1
+    if(pvalue <= 0.1){
+      if(sum(c(counts_1, counts_2) == 0) > 0){
+        options(warn=-1)
+        # Restricted MLE of logL2
+        A <- matrix(rbind(c(1, 0, 0, 0, 0), c(-1, 0, 0, 0, 0), c(0, 0, 1, 0 ,0), c(0, 0, -1, 0 ,0), c(0, 0, 0, 0 ,1), c(0, 0, 0, 0 ,-1)), 6, 5)
+        B <- c(1e-10, 1+1e-10, 1e-10, 1+1e-10, 1e-10, 1+1e-10)
+        mleL2 <- try(maxLik(logLik = logL2, start = c(theta_resL2 = 0.5, size_1_resL2 = 1, prob_1_resL2 = 0.5, size_2_resL2 = 1, prob_2_resL2 = 0.5), constraints=list(ineqA=A, ineqB=B)), silent=TRUE)
+        if('try-error' %in% class(mleL2)){
+          mleL2 <- try(maxLik(logLik = logL2, start = c(theta_resL2 = 0, size_1_resL2 = 1, prob_1_resL2 = 0.5, size_2_resL2 = 1, prob_2_resL2 = 0.5), constraints=list(ineqA=A, ineqB=B)), silent=TRUE)
+        }
+        if('try-error' %in% class(mleL2)){
+          mleL2 <- try(maxLik(logLik = logL2, start = c(theta_resL2 = 1, size_1_resL2 = 1, prob_1_resL2 = 0.5, size_2_resL2 = 1, prob_2_resL2 = 0.5), constraints=list(ineqA=A, ineqB=B)), silent=TRUE)
+        }
+        if('try-error' %in% class(mleL2)){
+          A <- matrix(rbind(c(0, 1, 0, 0), c(0, -1, 0, 0), c(0, 0, 0 ,1), c(0, 0, 0 ,-1)), 4, 4)
+          B <- c(1e-10, 1+1e-10, 1e-10, 1+1e-10)
+          mleL2 <- maxLik(logLik = logL2NZ, start = c(size_1_resL2 = 1, prob_1_resL2 = 0.5, size_2_resL2 = 1, prob_2_resL2 = 0.5), constraints=list(ineqA=A, ineqB=B))
+          theta_resL2 <- 0
+          size_1_resL2 <- mleL2$estimate["size_1_resL2"];names(size_1_resL2) <- NULL
+          prob_1_resL2 <- mleL2$estimate["prob_1_resL2"];names(prob_1_resL2) <- NULL
+          size_2_resL2 <- mleL2$estimate["size_2_resL2"];names(size_2_resL2) <- NULL
+          prob_2_resL2 <- mleL2$estimate["prob_2_resL2"];names(prob_2_resL2) <- NULL
+        }else{
+          theta_resL2 <- mleL2$estimate["theta_resL2"];names(theta_resL2) <- NULL
+          size_1_resL2 <- mleL2$estimate["size_1_resL2"];names(size_1_resL2) <- NULL
+          prob_1_resL2 <- mleL2$estimate["prob_1_resL2"];names(prob_1_resL2) <- NULL
+          size_2_resL2 <- mleL2$estimate["size_2_resL2"];names(size_2_resL2) <- NULL
+          prob_2_resL2 <- mleL2$estimate["prob_2_resL2"];names(prob_2_resL2) <- NULL
+        }
+
+        # Restricted MLE of logL3
+        if((sum(counts_1 == 0) > 0) & (sum(counts_2 == 0) > 0)){
+          # logL3
+          if(sum(counts_1 == 0) == length(counts_1)){
+            A <- matrix(rbind(c(0, 1, 0), c(0, -1, 0), c(0, 0 ,1), c(0, 0 ,-1)), 4, 3)
+            B <- c(1e-10, 1+1e-10, 1e-10, 1+1e-10)
+            mleL3 <- maxLik(logLik = logL3AZ1, start = c(size_resL3 = 1, prob_resL3 = 0.5, theta_2_resL3 = 0.5), constraints=list(ineqA=A, ineqB=B))
+            theta_1_resL3 <- 1
+            size_resL3 <- mleL3$estimate["size_resL3"];names(size_resL3) <- NULL
+            prob_resL3 <- mleL3$estimate["prob_resL3"];names(prob_resL3) <- NULL
+            theta_2_resL3 <- mleL3$estimate["theta_2_resL3"];names(theta_2_resL3) <- NULL
+          }else if(sum(counts_2 == 0) == length(counts_2)){
+            A <- matrix(rbind(c(1, 0, 0), c(-1, 0, 0), c(0, 0 ,1), c(0, 0 ,-1)), 4, 3)
+            B <- c(1e-10, 1+1e-10, 1e-10, 1+1e-10)
+            mleL3 <- maxLik(logLik = logL3AZ2, start = c(theta_1_resL3 = 0.5, size_resL3 = 1, prob_resL3 = 0.5), constraints=list(ineqA=A, ineqB=B))
+            theta_1_resL3 <- mleL3$estimate["theta_1_resL3"];names(theta_1_resL3) <- NULL
+            size_resL3 <- mleL3$estimate["size_resL3"];names(size_resL3) <- NULL
+            prob_resL3 <- mleL3$estimate["prob_resL3"];names(prob_resL3) <- NULL
+            theta_2_resL3 <- 1
+          }else{
+            A <- matrix(rbind(c(1, 0, 0, 0), c(-1, 0, 0, 0), c(0, 0, 1, 0), c(0, 0, -1, 0), c(0, 0, 0 ,1), c(0, 0, 0 ,-1)), 6, 4)
+            B <- c(1e-10, 1+1e-10, 1e-10, 1+1e-10, 1e-10, 1+1e-10)
+            mleL3 <- maxLik(logLik = logL3, start = c(theta_1_resL3 = 0.5, size_resL3 = 1, prob_resL3 = 0.5, theta_2_resL3 = 0.5), constraints=list(ineqA=A, ineqB=B))
+            theta_1_resL3 <- mleL3$estimate["theta_1_resL3"];names(theta_1_resL3) <- NULL
+            size_resL3 <- mleL3$estimate["size_resL3"];names(size_resL3) <- NULL
+            prob_resL3 <- mleL3$estimate["prob_resL3"];names(prob_resL3) <- NULL
+            theta_2_resL3 <- mleL3$estimate["theta_2_resL3"];names(theta_2_resL3) <- NULL
+          }
+        }else if(sum(counts_1 == 0) == 0){
+          # logL3
+          if(sum(counts_2 == 0) == length(counts_2)){
+            A <- matrix(rbind(c(0, 1), c(0, -1)), 2, 2)
+            B <- c(1e-10, 1+1e-10)
+            mleL3 <- maxLik(logLik = logL3NZ1AZ2, start = c(size_resL3 = 1, prob_resL3 = 0.5), constraints=list(ineqA=A, ineqB=B))
+            theta_1_resL3 <- 0
+            size_resL3 <- mleL3$estimate["size_resL3"];names(size_resL3) <- NULL
+            prob_resL3 <- mleL3$estimate["prob_resL3"];names(prob_resL3) <- NULL
+            theta_2_resL3 <- 1
+          }else{
+            A <- matrix(rbind(c(0, 1, 0), c(0, -1, 0), c(0, 0 ,1), c(0, 0 ,-1)), 4, 3)
+            B <- c(1e-10, 1+1e-10, 1e-10, 1+1e-10)
+            mleL3 <- maxLik(logLik = logL3NZ1, start = c(size_resL3 = 1, prob_resL3 = 0.5, theta_2_resL3 = 0.5), constraints=list(ineqA=A, ineqB=B))
+            theta_1_resL3 <- 0
+            size_resL3 <- mleL3$estimate["size_resL3"];names(size_resL3) <- NULL
+            prob_resL3 <- mleL3$estimate["prob_resL3"];names(prob_resL3) <- NULL
+            theta_2_resL3 <- mleL3$estimate["theta_2_resL3"];names(theta_2_resL3) <- NULL
+          }
+        }else if(sum(counts_2 == 0) == 0){
+          # logL3
+          if(sum(counts_1 == 0) == length(counts_1)){
+            A <- matrix(rbind(c(0, 1), c(0, -1)), 2, 2)
+            B <- c(1e-10, 1+1e-10)
+            mleL3 <- maxLik(logLik = logL3NZ2AZ1, start = c(size_resL3 = 1, prob_resL3 = 0.5), constraints=list(ineqA=A, ineqB=B))
+            theta_1_resL3 <- 1
+            size_resL3 <- mleL3$estimate["size_resL3"];names(size_resL3) <- NULL
+            prob_resL3 <- mleL3$estimate["prob_resL3"];names(prob_resL3) <- NULL
+            theta_2_resL3 <- 0
+          }else{
+            A <- matrix(rbind(c(1, 0, 0), c(-1, 0, 0), c(0, 0 ,1), c(0, 0 ,-1)), 4, 3)
+            B <- c(1e-10, 1+1e-10, 1e-10, 1+1e-10)
+            mleL3 <- maxLik(logLik = logL3NZ2, start = c(theta_1_resL3 = 0.5, size_resL3 = 1, prob_resL3 = 0.5), constraints=list(ineqA=A, ineqB=B))
+            theta_1_resL3 <- mleL3$estimate["theta_1_resL3"];names(theta_1_resL3) <- NULL
+            size_resL3 <- mleL3$estimate["size_resL3"];names(size_resL3) <- NULL
+            prob_resL3 <- mleL3$estimate["prob_resL3"];names(prob_resL3) <- NULL
+            theta_2_resL3 <- 0
+          }
+        }
+        options(warn=0)
+      }else{
+        # Restricted MLE of logL2
+        theta_resL2 <- 0
+        size_1_resL2 <- size_1
+        prob_1_resL2 <- prob_1
+        size_2_resL2 <- size_2
+        prob_2_resL2 <- prob_2
+
+        # Restricted MLE of logL3
+        theta_1_resL3 <- 0
+        size_resL3 <- size_res
+        prob_resL3 <- prob_res
+        theta_2_resL3 <- 0
+      }
+
+      # Judge parameters
+      if(!(judgeParam(theta_resL2) & judgeParam(prob_1_resL2) & judgeParam(prob_2_resL2)))
+        results_gene[1,"Remark"] <- "logL2 failed!"
+      if(!(judgeParam(theta_1_resL3) & judgeParam(theta_2_resL3) & judgeParam(prob_resL3)))
+        results_gene[1,"Remark"] <- "logL3 failed!"
+
+      # LRT test of H20 and H30
+      chi2LR2 <- 2 *(logL(counts_1, theta_1, size_1, prob_1, counts_2, theta_2, size_2, prob_2) - logL(counts_1, theta_resL2, size_1_resL2, prob_1_resL2, counts_2, theta_resL2, size_2_resL2, prob_2_resL2))
+      pvalue_LR2 <- 1 - pchisq(chi2LR2, df = 1)
+      chi2LR3 <- 2 *(logL(counts_1, theta_1, size_1, prob_1, counts_2, theta_2, size_2, prob_2) - logL(counts_1, theta_1_resL3, size_resL3, prob_resL3, counts_2, theta_2_resL3, size_resL3, prob_resL3))
+      pvalue_LR3 <- 1 - pchisq(chi2LR3, df = 2)
+
+      # Format output
+      results_gene[1,"pvalue_LR2"] <- pvalue_LR2
+      results_gene[1,"pvalue_LR3"] <- pvalue_LR3
+    }
+
+    # Return results_gene
     return(results_gene)
   }
 
