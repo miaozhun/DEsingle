@@ -4,9 +4,11 @@
 
 *2018-07-26*
 
-[![build](https://bioconductor.org/shields/build/release/bioc/DEsingle.svg)](http://bioconductor.org/checkResults/release/bioc-LATEST/DEsingle/)
+[![build](https://bioconductor.org/shields/build/release/bioc/DEsingle.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/DEsingle/)
 [![platform](https://bioconductor.org/shields/availability/3.8/DEsingle.svg)](https://miaozhun.github.io/DEsingle/#downloads)
+[![inBioC](https://bioconductor.org/shields/years-in-bioc/DEsingle.svg)](https://bioconductor.org/packages/DEsingle/)
 [![downloads](https://bioconductor.org/shields/downloads/DEsingle.svg)](https://rebrand.ly/DEsingle_source)
+[![updated](https://bioconductor.org/shields/lastcommit/release/bioc/DEsingle.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/DEsingle/)
 
 ![Logo](https://github.com/miaozhun/DEsingle/blob/master/vignettes/DEsingle_LOGO.png?raw=true)
 
