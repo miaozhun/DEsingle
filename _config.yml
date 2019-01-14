@@ -3,7 +3,7 @@ description: Detecting three types of differential expression in single-cell RNA
 show_downloads: true
 github:
   is_project_page: true
-  repository_url: https://bioconductor.org/packages/release/bioc/src/contrib/DEsingle_1.0.5.tar.gz
+  repository_url: https://bioconductor.org/packages/release/bioc/src/contrib/DEsingle_1.2.1.tar.gz
   zip_url: https://doi.org/10.1093/bioinformatics/bty332
   tar_url: https://bioconductor.org/packages/DEsingle
   
