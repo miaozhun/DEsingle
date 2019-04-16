@@ -43,8 +43,9 @@ If you use **`DEsingle`** in published research, please cite:
 To install **`DEsingle`** from [**Bioconductor**](http://bioconductor.org/packages/DEsingle/):
 
 ```R
-source("https://bioconductor.org/biocLite.R")
-biocLite("DEsingle")
+if (!requireNamespace("BiocManager", quietly=TRUE))
+    install.packages("BiocManager")
+BiocManager::install("DEsingle")
 ```
 
 To install the *developmental version* from [**Bioconductor**](https://bioconductor.org/packages/devel/bioc/html/DEsingle.html):
