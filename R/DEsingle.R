@@ -494,8 +494,8 @@ DEsingle <- function(counts, group, parallel = FALSE, BPPARAM = bpparam()){
     results_gene[1,"chi2LR1"] <- chi2LR1
     results_gene[1,"pvalue"] <- pvalue
 
-    # Restricted MLE of logL2 and logL3 under H20 and H30 when pvalue <= 0.1
-    if(pvalue <= 0.1){
+    # Restricted MLE of logL2 and logL3 under H20 and H30 when pvalue <= 0.05
+    if(pvalue <= 0.05){
       if(sum(c(counts_1, counts_2) == 0) > 0){
         options(warn=-1)
         # Restricted MLE of logL2
